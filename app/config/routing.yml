@@ -1,3 +1,9 @@
+qlowd_ftpadm:
+    resource: "@QlowdFtpadmBundle/Resources/config/routing.yml"
+    prefix:   /
+
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
+logout:
+    path: /logout
