@@ -1,9 +1,12 @@
 <?php
+
 namespace Qlowd\FtpadmBundle\Entity;
+
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+
 
 /**
  * @ORM\Table(name="User")
@@ -12,109 +15,50 @@ use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 class User implements UserInterface, \Serializable
 {
     /**
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @var integer
      */
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=25, unique=true)
+     * @var string
      */
-    private $username;
+    private $login;
 
     /**
-     * @ORM\Column(type="string", length=64)
+     * @var string
+     */
+    private $mail;
+
+    /**
+     * @var string
+     */
+    private $fullname;
+
+    /**
+     * @var string
      */
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=60, unique=true)
+     * @var boolean
      */
-    private $email;
+    private $access;
 
     /**
-     * @ORM\Column(name="is_active", type="boolean")
+     * @var string
+     */
+    private $phone;
+
+    /**
+     * @var boolean
      */
     private $isActive;
 
-    public function __construct()
-    {
-        $this->isActive = true;
-        // may not be needed, see section on salt below
-        // $this->salt = md5(uniqid(null, true));
-    }
-    public function getUsername()
-    {
-        return $this->username;
-    }
+    /**
+     * @var \Qlowd\FtpadmBundle\Entity\Customer
+     */
+    private $customer;
 
-    public function getSalt()
-    {
-        // you *may* need a real salt depending on your encoder
-        // see section on salt below
-        return null;
-    }
-
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    public function getRoles()
-    {
-        return array('ROLE_USER');
-    }
-
-    public function eraseCredentials()
-    {
-    }
-
-    public function isAccountNonExpired()
-    {
-        return true;
-    }
-
-    public function isAccountNonLocked()
-    {
-        return true;
-    }
-
-    public function isCredentialsNonExpired()
-    {
-        return true;
-    }
-
-    public function isEnabled()
-    {
-        return $this->isActive;
-    }
-
-    /** @see \Serializable::serialize() */
-    public function serialize()
-    {
-        return serialize(array(
-            $this->id,
-            $this->username,
-            $this->password,
-            $this->isActive,
-            // see section on salt below
-            // $this->salt,
-        ));
-    }
-
-    /** @see \Serializable::unserialize() */
-    public function unserialize($serialized)
-    {
-        list (
-            $this->id,
-            $this->username,
-            $this->password,
-            $this->isActive,
-            // see section on salt below
-            // $this->salt
-        ) = unserialize($serialized);
-    }
 
     /**
      * Get id
@@ -127,16 +71,72 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Set username
+     * Set login
      *
-     * @param string $username
+     * @param string $login
      * @return User
      */
-    public function setUsername($username)
+    public function setLogin($login)
     {
-        $this->username = $username;
+        $this->login = $login;
 
         return $this;
+    }
+
+    /**
+     * Get login
+     *
+     * @return string
+     */
+    public function getLogin()
+    {
+        return $this->login;
+    }
+
+    /**
+     * Set mail
+     *
+     * @param string $mail
+     * @return User
+     */
+    public function setMail($mail)
+    {
+        $this->mail = $mail;
+
+        return $this;
+    }
+
+    /**
+     * Get mail
+     *
+     * @return string
+     */
+    public function getMail()
+    {
+        return $this->mail;
+    }
+
+    /**
+     * Set fullname
+     *
+     * @param string $fullname
+     * @return User
+     */
+    public function setFullname($fullname)
+    {
+        $this->fullname = $fullname;
+
+        return $this;
+    }
+
+    /**
+     * Get fullname
+     *
+     * @return string
+     */
+    public function getFullname()
+    {
+        return $this->fullname;
     }
 
     /**
@@ -153,26 +153,59 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Set email
+     * Get password
      *
-     * @param string $email
+     * @return string
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * Set access
+     *
+     * @param boolean $access
      * @return User
      */
-    public function setEmail($email)
+    public function setAccess($access)
     {
-        $this->email = $email;
+        $this->access = $access;
 
         return $this;
     }
 
     /**
-     * Get email
+     * Get access
+     *
+     * @return boolean
+     */
+    public function getAccess()
+    {
+        return $this->access;
+    }
+
+    /**
+     * Set phone
+     *
+     * @param string $phone
+     * @return User
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    /**
+     * Get phone
      *
      * @return string
      */
-    public function getEmail()
+    public function getPhone()
     {
-        return $this->email;
+        return $this->phone;
     }
 
     /**
@@ -197,4 +230,94 @@ class User implements UserInterface, \Serializable
     {
         return $this->isActive;
     }
+
+    /**
+     * Set customer
+     *
+     * @param \Qlowd\FtpadmBundle\Entity\Customer $customer
+     * @return User
+     */
+    public function setCustomer(\Qlowd\FtpadmBundle\Entity\Customer $customer = null)
+    {
+        $this->customer = $customer;
+
+        return $this;
+    }
+
+    /**
+     * Get customer
+     *
+     * @return \Qlowd\FtpadmBundle\Entity\Customer
+     */
+    public function getCustomer()
+    {
+        return $this->customer;
+    }
+
+
+
+    public function getRoles()
+    {
+      return array('ROLE_USER');
+    }
+
+    public function getSalt()
+    {
+      return null;
+    }
+
+    public function getUsername()
+    {
+      return $this->login;
+
+    }
+    public function eraseCredentials()
+    {
+    }
+    public function isAccountNonExpired()
+    {
+        return true;
+    }
+
+    public function isAccountNonLocked()
+    {
+        return true;
+    }
+
+    public function isCredentialsNonExpired()
+    {
+        return true;
+    }
+
+    public function isEnabled()
+    {
+        return $this->isActive;
+    }
+    /** @see \Serializable::serialize() */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->login,
+            $this->password,
+            $this->isActive,
+            // see section on salt below
+            // $this->salt,
+        ));
+    }
+
+    /** @see \Serializable::unserialize() */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->login,
+            $this->password,
+            $this->isActive,
+            // see section on salt below
+            // $this->salt
+        ) = unserialize($serialized);
+    }
+
+
 }

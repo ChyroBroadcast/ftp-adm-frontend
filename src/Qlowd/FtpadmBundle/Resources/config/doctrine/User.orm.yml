@@ -1,0 +1,67 @@
+Qlowd\FtpadmBundle\Entity\User:
+    type: entity
+    table: User
+    indexes:
+        customer:
+            columns:
+                - customer
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: true
+            comment: ''
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        login:
+            type: string
+            nullable: false
+            length: 255
+            fixed: false
+            comment: ''
+        mail:
+            type: string
+            nullable: false
+            length: 255
+            fixed: false
+            comment: ''
+        fullname:
+            type: text
+            nullable: false
+            length: null
+            fixed: false
+            comment: ''
+        password:
+            type: string
+            nullable: false
+            length: 255
+            fixed: false
+            comment: ''
+        access:
+            type: boolean
+            nullable: false
+            comment: ''
+        phone:
+            type: text
+            nullable: false
+            length: null
+            fixed: false
+            comment: ''
+        isActive:
+            type: boolean
+            nullable: false
+            comment: ''
+            column: is_active
+    manyToOne:
+        customer:
+            targetEntity: Customer
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                customer:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

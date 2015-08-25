@@ -7,7 +7,7 @@
                 {% stylesheets '@bootstrap_css' %}
                         <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}"/>
                 {% endstylesheets %}
-                <link href="{{ asset('bundles/app/css/login.css') }}" type="text/css" rel="stylesheet" />
+                <link href="{{ asset('bundles/qlowdftpadm/css/login.css') }}" type="text/css" rel="stylesheet" />
             {% endblock %}
 
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
@@ -15,6 +15,7 @@
     <body>
         <div class="container">
               {% block body %}
+                      {{pass}}
                       <form action="{{ path('login_check') }}" method="post" class="form-signin">
                           <h2 class="form-signin-heading">Please sign in</h2>
                           {% if error %}

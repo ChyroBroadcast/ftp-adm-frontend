@@ -1,197 +1,148 @@
--- phpMyAdmin SQL Dump
--- version 4.2.12deb2
--- http://www.phpmyadmin.net
+-- MySQL dump 10.13  Distrib 5.5.14, for osx10.6 (i386)
 --
--- Client :  localhost
--- Généré le :  Mar 25 Août 2015 à 18:25
--- Version du serveur :  5.5.44-0+deb8u1
--- Version de PHP :  5.6.9-0+deb8u1
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
-
+-- Host: localhost    Database: symfony
+-- ------------------------------------------------------
+-- Server version	5.5.14
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Base de données :  `qlowd`
+-- Table structure for table `Address`
 --
 
--- --------------------------------------------------------
+DROP TABLE IF EXISTS `Address`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Address` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `street` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `zip_code` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `city` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `country` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `phone` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `iban` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `vat_number` longtext COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Structure de la table `Address`
+-- Table structure for table `Customer`
 --
 
-CREATE TABLE IF NOT EXISTS `Address` (
-`id` int(10) unsigned NOT NULL,
-  `title` text NOT NULL,
-  `street` text NOT NULL,
-  `zip_code` text NOT NULL,
-  `city` text NOT NULL,
-  `country` text NOT NULL,
-  `phone` text NOT NULL,
-  `iban` text NOT NULL,
-  `vat_number` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `AddressCustomerRelation`
---
-
-CREATE TABLE IF NOT EXISTS `AddressCustomerRelation` (
-  `customer` int(11) NOT NULL,
-  `address` int(11) unsigned NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
+DROP TABLE IF EXISTS `Customer`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Customer` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `total_space` bigint(20) NOT NULL,
+  `used_space` bigint(20) NOT NULL,
+  `price` decimal(10,0) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Structure de la table `Customer`
+-- Table structure for table `FtpXferLog`
 --
 
-CREATE TABLE IF NOT EXISTS `Customer` (
-`id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `total_space` bigint(20) unsigned NOT NULL,
-  `used_space` bigint(20) unsigned NOT NULL,
-  `price` decimal(10,0) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `FtpUser`
---
-
-CREATE TABLE IF NOT EXISTS `FtpUser` (
-  `id` int(10) unsigned NOT NULL,
-  `uid` int(10) unsigned NOT NULL,
-  `gid` int(10) unsigned NOT NULL,
-  `shell` varchar(255) NOT NULL,
-  `access` enum('none','read','write','read_write') NOT NULL DEFAULT 'none',
-  `chroot` tinyint(1) NOT NULL,
-  `homedirectory` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `FtpXferLog`
---
-
-CREATE TABLE IF NOT EXISTS `FtpXferLog` (
-  `id` int(10) unsigned NOT NULL,
-  `username` text NOT NULL,
-  `filename` text NOT NULL,
+DROP TABLE IF EXISTS `FtpXferLog`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `FtpXferLog` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `filename` longtext COLLATE utf8_unicode_ci NOT NULL,
   `filesize` bigint(20) NOT NULL,
-  `ip` varchar(255) NOT NULL,
-  `action` varchar(255) NOT NULL,
-  `duration` varchar(255) NOT NULL,
-  `logtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `ip` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `action` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `duration` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `logtime` datetime NOT NULL,
   `success` tinyint(1) NOT NULL,
-  `sync_status` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
+  `sync_status` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Structure de la table `User`
+-- Table structure for table `User`
 --
 
-CREATE TABLE IF NOT EXISTS `User` (
-`id` int(10) unsigned NOT NULL,
-  `login` varchar(255) NOT NULL,
-  `mail` varchar(255) NOT NULL,
-  `fullname` text NOT NULL,
-  `password` varchar(255) NOT NULL,
+DROP TABLE IF EXISTS `User`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `User` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `customer` int(11) DEFAULT NULL,
+  `login` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `mail` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `fullname` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `access` tinyint(1) NOT NULL,
-  `phone` text NOT NULL,
+  `phone` longtext COLLATE utf8_unicode_ci NOT NULL,
   `is_active` tinyint(1) NOT NULL,
-  `customer` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`),
+  KEY `IDX_2DA1797781398E09` (`customer`),
+  CONSTRAINT `FK_2DA1797781398E09` FOREIGN KEY (`customer`) REFERENCES `Customer` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Index pour les tables exportées
+-- Table structure for table `addresscustomerrelation`
 --
 
---
--- Index pour la table `Address`
---
-ALTER TABLE `Address`
- ADD PRIMARY KEY (`id`);
+DROP TABLE IF EXISTS `addresscustomerrelation`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `addresscustomerrelation` (
+  `customer` int(11) NOT NULL,
+  `address` int(11) NOT NULL,
+  PRIMARY KEY (`customer`,`address`),
+  KEY `IDX_23313A9E81398E09` (`customer`),
+  KEY `IDX_23313A9ED4E6F81` (`address`),
+  CONSTRAINT `FK_23313A9ED4E6F81` FOREIGN KEY (`address`) REFERENCES `Address` (`id`),
+  CONSTRAINT `FK_23313A9E81398E09` FOREIGN KEY (`customer`) REFERENCES `Customer` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Index pour la table `AddressCustomerRelation`
---
-ALTER TABLE `AddressCustomerRelation`
- ADD PRIMARY KEY (`customer`,`address`), ADD KEY `customer` (`customer`), ADD KEY `address` (`address`);
-
---
--- Index pour la table `Customer`
---
-ALTER TABLE `Customer`
- ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `name` (`name`);
-
---
--- Index pour la table `FtpUser`
---
-ALTER TABLE `FtpUser`
- ADD KEY `id` (`id`);
-
---
--- Index pour la table `User`
---
-ALTER TABLE `User`
- ADD PRIMARY KEY (`id`), ADD KEY `customer` (`customer`);
-
---
--- AUTO_INCREMENT pour les tables exportées
+-- Table structure for table `ftpuser`
 --
 
---
--- AUTO_INCREMENT pour la table `Address`
---
-ALTER TABLE `Address`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `Customer`
---
-ALTER TABLE `Customer`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `User`
---
-ALTER TABLE `User`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
---
--- Contraintes pour les tables exportées
---
+DROP TABLE IF EXISTS `ftpuser`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ftpuser` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uid` int(11) NOT NULL,
+  `gid` int(11) NOT NULL,
+  `shell` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `access` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `chroot` tinyint(1) NOT NULL,
+  `homedirectory` longtext COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
---
--- Contraintes pour la table `AddressCustomerRelation`
---
-ALTER TABLE `AddressCustomerRelation`
-ADD CONSTRAINT `AddressCustomerRelation_ibfk_2` FOREIGN KEY (`address`) REFERENCES `Address` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-ADD CONSTRAINT `AddressCustomerRelation_ibfk_1` FOREIGN KEY (`customer`) REFERENCES `Customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Contraintes pour la table `FtpUser`
---
-ALTER TABLE `FtpUser`
-ADD CONSTRAINT `FtpUser_ibfk_1` FOREIGN KEY (`id`) REFERENCES `User` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Contraintes pour la table `User`
---
-ALTER TABLE `User`
-ADD CONSTRAINT `User_ibfk_1` FOREIGN KEY (`customer`) REFERENCES `Customer` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2015-08-26  0:11:46

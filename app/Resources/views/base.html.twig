@@ -3,17 +3,42 @@
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        {% stylesheets '@bootstrap_css' %}
-            <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}"/>
-        {% endstylesheets %}
+            {% block stylesheets %}
+                {% stylesheets '@bootstrap_css' %}
+                        <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}"/>
+                {% endstylesheets %}
+                <link href="{{ asset('bundles/qlowdftpadm/css/default.css') }}" type="text/css" rel="stylesheet" />
+            {% endblock %}
+
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-        {% javascripts '@jquery' '@bootstrap_js' %}
-            <script type="text/javascript" src="{{ asset_url }}"></script>
-        {% endjavascripts %}
+        {% include 'navbar.html.twig' %}
+
+        <div class="container-fluid" id="main_page">
+          <div class="row">
+            <div class="col-sm-3 col-md-2 sidebar">
+              {% embed 'sidebar.html.twig' %}
+              {% endembed %}
+            </div>
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+              {% block body %}{% endblock %}
+            </div>
+          </div>
+        </div>
+
+
+
+        {% block footer %}
+            {% include 'footer.html.twig' %}
+        {% endblock %}
+
+
+
+    {% javascripts '@jquery' '@bootstrap_js' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    {% block dialog %}
+    {% endblock %}
     </body>
 </html>
