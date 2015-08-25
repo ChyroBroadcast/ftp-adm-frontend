@@ -1,30 +1,39 @@
 # To get started with security, check out the documentation:
 # http://symfony.com/doc/current/book/security.html
 security:
-
+    encoders:
+        AppBundle\Entity\User:
+            algorithm:            pbkdf2
+            hash_algorithm:       sha512
+            encode_as_base64:     true
+            iterations:           1024
+            key_length:           40
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
-        in_memory:
-            memory: ~
-
+        db_chyro:
+            entity:
+              class: QlowdFtpadmBundle:User
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-
-        main:
+        login_firewall:
+            pattern: ^/login$
             anonymous: ~
-            # activate different ways to authenticate
-
-            # http_basic: ~
-            # http://symfony.com/doc/current/book/security.html#a-configuring-how-your-users-will-authenticate
-
-            # form_login: ~
-            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+        security_area:
+            pattern:    ^/
+            http_basic: ~
+            provider: db_chyro
             form_login:
                 login_path: /login
                 check_path: /login_check
+                use_forward: false
+                always_use_default_target_path: true
+                default_target_path:            /
+                target_path_parameter:          _target_path
+                use_referer:                    false
+
             logout:
                 path:   /logout
-                target: /
+                target:   /

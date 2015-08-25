@@ -19,6 +19,7 @@ Follow instruction, but main error is to install composer and launch :
 $ curl -sS https://getcomposer.org/installer | php
 [...]
 $ php composer.phar install
+$ php composer.phar update
 [...]
 ```
 
