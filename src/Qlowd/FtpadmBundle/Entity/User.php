@@ -4,15 +4,13 @@ namespace Qlowd\FtpadmBundle\Entity;
 
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
+//use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
-
 /**
- * @ORM\Table(name="User")
  * @ORM\Entity(repositoryClass="Qlowd\FtpadmBundle\Entity\UserRepository")
  */
-class User implements UserInterface, \Serializable
+class User implements AdvancedUserInterface, \Serializable
 {
     /**
      * @var integer
@@ -253,8 +251,6 @@ class User implements UserInterface, \Serializable
     {
         return $this->customer;
     }
-
-
 
     public function getRoles()
     {

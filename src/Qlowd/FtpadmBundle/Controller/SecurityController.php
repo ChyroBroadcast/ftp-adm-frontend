@@ -1,12 +1,9 @@
 <?php
-// src/AppBundle/Controller/SecurityController.php
 namespace Qlowd\FtpadmBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-
-//use Qlowd\FtpadmBundle\Entity as Security;
 
 class SecurityController extends Controller
 {
@@ -16,7 +13,6 @@ class SecurityController extends Controller
      public function loginAction(Request $request)
      {
             $authenticationUtils = $this->get('security.authentication_utils');
-
 
 
             // get the login error if there is one

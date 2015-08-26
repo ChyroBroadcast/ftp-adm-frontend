@@ -1,5 +1,6 @@
 Qlowd\FtpadmBundle\Entity\User:
     type: entity
+    repositoryClass: Qlowd\FtpadmBundle\Entity\UserRepository # ajouter cette ligne
     table: User
     indexes:
         customer:
