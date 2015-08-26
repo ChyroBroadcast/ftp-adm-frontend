@@ -7,6 +7,6 @@
 
 {% block body %}
 <div class="page-header">
-  <h1>Welcome {{ app.user.fullname }}</h1>
+  <h1>{{ 'welcome'|trans }} {{ app.user.fullname }}</h1>
 </div>
 {% endblock %}

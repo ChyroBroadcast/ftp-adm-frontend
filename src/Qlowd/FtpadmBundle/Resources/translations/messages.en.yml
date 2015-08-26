@@ -1,0 +1,11 @@
+log.out: Log out
+log.in: Log in
+login: Login
+conj: and
+disj: or
+username: Username
+pass: Password
+msg.welcome: Welcome
+msg.log.succes: Invalid credentials.
+msg.log.fail: Connected
+please.prefix: Please

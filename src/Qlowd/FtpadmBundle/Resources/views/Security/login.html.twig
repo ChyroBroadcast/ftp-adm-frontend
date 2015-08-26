@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Please login{% endblock %}</title>
+        <title>{% block title %}{{ 'log.in'|trans }}{% endblock %}</title>
             {% block stylesheets %}
                 {% stylesheets '@bootstrap_css' %}
                         <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}"/>
@@ -17,7 +17,7 @@
               {% block body %}
                       {{pass}}
                       <form action="{{ path('login_check') }}" method="post" class="form-signin">
-                          <h2 class="form-signin-heading">{{ 'Please sign in'|trans }}</h2>
+                          <h2 class="form-signin-heading">{{ 'login'|trans }}</h2>
                           {% if error %}
                               <div class="alert alert-danger alert-dismissible" role="alert">
                                   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -25,10 +25,10 @@
                               </div>
                           {% endif %}
                           <label for="username" class="sr-only">Username:</label>
-                          <input  class="form-control" type="text" id="username" name="_username" placeholder="{{ 'Username'|trans }} {{ 'or'|trans }} Email" value="{{ last_username }}" required autofocus />
+                          <input  class="form-control" type="text" id="username" name="_username" placeholder="{{ 'username'|trans }} {{ 'conj'|trans }} Email" value="{{ last_username }}" required autofocus />
 
                           <label for="password" class="sr-only">Password:</label>
-                          <input type="password" id="password" name="_password" class=" form-control" placeholder="{{ 'Password'|trans }}" required />
+                          <input type="password" id="password" name="_password" class=" form-control" placeholder="{{ 'pass'|trans }}" required />
 
                           {#
                               If you want to control the URL the user
@@ -36,7 +36,7 @@
                               <input type="hidden" name="_target_path" value="/account" />
                           #}
 
-                          <button type="submit" class="btn btn-lg btn-primary btn-block">{{ 'Login'|trans }}</button>
+                          <button type="submit" class="btn btn-lg btn-primary btn-block">{{ 'login'|trans }}</button>
                       </form>
               {% endblock %}
         </div>
