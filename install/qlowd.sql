@@ -49,8 +49,10 @@ CREATE TABLE `Customer` (
   `total_space` bigint(20) NOT NULL,
   `used_space` bigint(20) NOT NULL,
   `price` decimal(10,0) NOT NULL,
+  `path` text NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`)
+  UNIQUE KEY `name` (`name`),
+  UNIQUE KEY `path` (`path`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

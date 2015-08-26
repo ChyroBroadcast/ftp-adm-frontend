@@ -39,7 +39,7 @@ CREATE TABLE `Customer` (
 
 LOCK TABLES `Customer` WRITE;
 /*!40000 ALTER TABLE `Customer` DISABLE KEYS */;
-INSERT INTO `Customer` VALUES (1,'Qlowd',0,0,0);
+INSERT INTO `Customer` VALUES (1,'Qlowd',0,0,0, '/mnt/raid/ftp');
 /*!40000 ALTER TABLE `Customer` ENABLE KEYS */;
 UNLOCK TABLES;
 
