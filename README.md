@@ -34,3 +34,10 @@ And to launch app in dev mode :
 ```
 $php app/console server:run
 ```
+
+## Defautl Credentials
+
+* Login: qlowd
+* MdP: qlowd
+
+Secure :)
