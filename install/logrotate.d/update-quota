@@ -1,0 +1,8 @@
+/var/log/ftp-adm-frontend/update-quota.log {
+	rotate 52
+	weekly
+	compress
+	notifempty
+	missingok
+}
+

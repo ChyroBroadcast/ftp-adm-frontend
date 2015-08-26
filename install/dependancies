@@ -1,0 +1,6 @@
+Dependancies of
+* install/update-quota.pl:
+  - DBD::mysql from libdbd-mysql-perl
+  - perl DBI from libdbi-perl
+  - xfs_quota from xfsprogs
+

@@ -1,0 +1,5 @@
+#
+# cron.d/update-quota -- synchronize xfs_quota into database
+#
+
+*/5 * * * root update-quoga.pl
