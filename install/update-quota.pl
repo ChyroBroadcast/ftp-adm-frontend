@@ -27,7 +27,7 @@ my $dbh = DBI->connect( "DBI:mysql:$db:$host", $user, $pass )
 my $update = $dbh->prepare('UPDATE Customer SET used_space = ? WHERE path = ?')
     or die "Failed to prepare query bacuse $dbh->errstr";
 
-my @lines = qx!xfs_quota -x -c "df"!;
+my @lines = qx!xfs_quota -x -c "df -N"!;
 die "Failed to run 'xfs_quota' because $@" if $?;
 
 my $nb_updated = 0;
