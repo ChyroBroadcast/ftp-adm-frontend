@@ -2,7 +2,7 @@
 # http://symfony.com/doc/current/book/security.html
 security:
     encoders:
-        AppBundle\Entity\User:
+        Qlowd\FtpadmBundle\Entity\User:
             algorithm:            pbkdf2
             hash_algorithm:       sha512
             encode_as_base64:     true
@@ -12,7 +12,8 @@ security:
     providers:
         db_chyro:
             entity:
-              class: QlowdFtpadmBundle:User
+              class: Qlowd\FtpadmBundle\Entity\User
+              property: login
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
         dev:

@@ -19,9 +19,8 @@ class UserRepository extends EntityRepository implements UserProviderInterface
         public function loadUserByUsername($username)
         {
             $user = $this->createQueryBuilder('u')
-                ->where('u.username = :username OR u.email = :email')
+                ->where('u.login = :username')
                 ->setParameter('username', $username)
-                ->setParameter('email', $username)
                 ->getQuery()
                 ->getOneOrNullResult();
 

@@ -1,0 +1,47 @@
+Qlowd\FtpadmBundle\Entity\Ftpuser:
+    type: entity
+    table: ftpuser
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: true
+            comment: ''
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        uid:
+            type: integer
+            nullable: false
+            unsigned: true
+            comment: ''
+        gid:
+            type: integer
+            nullable: false
+            unsigned: true
+            comment: ''
+        shell:
+            type: string
+            nullable: false
+            length: 255
+            fixed: false
+            comment: ''
+        access:
+            type: string
+            nullable: false
+            length: null
+            fixed: false
+            comment: ''
+            default: none
+        chroot:
+            type: boolean
+            nullable: false
+            comment: ''
+        homedirectory:
+            type: text
+            nullable: false
+            length: null
+            fixed: false
+            comment: ''
+    lifecycleCallbacks: {  }

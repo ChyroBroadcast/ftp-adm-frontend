@@ -6,6 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
+//use Qlowd\FtpadmBundle\Entity as Security;
+
 class SecurityController extends Controller
 {
       /**
@@ -15,18 +17,28 @@ class SecurityController extends Controller
      {
             $authenticationUtils = $this->get('security.authentication_utils');
 
+
+
             // get the login error if there is one
             $error = $authenticationUtils->getLastAuthenticationError();
 
             // last username entered by the user
             $lastUsername = $authenticationUtils->getLastUsername();
 
+            $encoded = '';
+            /* // Used to generate first password :)
+            $user = new Security\User();
+            $plainPassword = 'qlowd';
+            $encoder = $this->container->get('security.password_encoder');
+            $encoded = $encoder->encodePassword($user, $plainPassword); */
+
             return $this->render(
-                'security/login.html.twig',
+                'QlowdFtpadmBundle:Security:login.html.twig',
                 array(
                     // last username entered by the user
                     'last_username' => $lastUsername,
                     'error'         => $error,
+                    'pass'         => $encoded
                 )
             );
      }

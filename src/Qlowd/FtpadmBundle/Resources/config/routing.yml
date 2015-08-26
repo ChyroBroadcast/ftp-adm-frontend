@@ -1,3 +1,7 @@
 qlowd_ftpadm_homepage:
-    path:     /hello
+    path:     /
     defaults: { _controller: QlowdFtpadmBundle:Default:index }
+
+qlowd_ftpadm_ftp:
+      path:     /ftp
+      defaults: { _controller: QlowdFtpadmBundle:Ftp:index }

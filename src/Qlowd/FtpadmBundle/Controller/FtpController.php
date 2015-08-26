@@ -6,14 +6,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
-class DefaultController extends Controller
+class FtpController extends Controller
 {
   /**
-  * @Route("/")
+  * @Route("/ftp")
   */
     public function indexAction()
     {
-        return $this->render('QlowdFtpadmBundle:Default:index.html.twig', array());
+        return $this->render('QlowdFtpadmBundle:Ftp:index.html.twig', array());
     }
 }
 

@@ -1,0 +1,59 @@
+Qlowd\FtpadmBundle\Entity\Customer:
+    type: entity
+    table: Customer
+    uniqueConstraints:
+        name:
+            columns:
+                - name
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: ''
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        name:
+            type: string
+            nullable: false
+            length: 255
+            fixed: false
+            comment: ''
+        totalSpace:
+            type: bigint
+            nullable: false
+            unsigned: true
+            comment: ''
+            column: total_space
+        usedSpace:
+            type: bigint
+            nullable: false
+            unsigned: true
+            comment: ''
+            column: used_space
+        price:
+            type: decimal
+            nullable: false
+            precision: 10
+            scale: 0
+            comment: ''
+    manyToMany:
+        address:
+            targetEntity: Address
+            cascade: {  }
+            mappedBy: null
+            inversedBy: customer
+            joinTable:
+                name: addresscustomerrelation
+                joinColumns:
+                    -
+                        name: customer
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    -
+                        name: address
+                        referencedColumnName: id
+            orderBy: null
+    lifecycleCallbacks: {  }
