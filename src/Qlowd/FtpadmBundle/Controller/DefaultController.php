@@ -6,15 +6,60 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
-class DefaultController extends Controller
-{
-  /**
-  * @Route("/")
-  */
-    public function indexAction()
-    {
-        return $this->render('QlowdFtpadmBundle:Default:index.html.twig', array());
+class DefaultController extends Controller {
+	/**
+	* @Route("/")
+	*/
+    public function indexAction() {
+		$doc = $this->container->get('doctrine')->getManager();
+		/**
+		 * TODO: 'qlowd' should be changed with correct customer
+		 */
+		$customer = $doc->getRepository('QlowdFtpadmBundle:Customer')->findOneByName('qlowd');
+		$user = $doc->getRepository('QlowdFtpadmBundle:User')->findAll();
+
+        return $this->render('QlowdFtpadmBundle:Default:index.html.twig', array(
+			'customer' => array(
+				'id' => $customer->getId(),
+				'name' => $customer->getName(),
+				'used_space' => intval($customer->getUsedSpace()),
+				'used_space_p' => DefaultController::convertSize(intval($customer->getUsedSpace())),
+				'total_space' => intval($customer->getTotalSpace()),
+				'total_space_p' => DefaultController::convertSize(intval($customer->getTotalSpace())),
+				'pct_used' => round(100.0 * $customer->getUsedSpace() / $customer->getTotalSpace(), 0),
+				'pct_used_p' => round(100.0 * $customer->getUsedSpace() / $customer->getTotalSpace(), 0) . '%'
+			),
+			'debug' => DefaultController::convertSize(10000000000000)
+		));
     }
+
+	public static function convertSize($size) {
+		$mult = 0;
+		while ($size > 1024 && $mult < 4) {
+			$mult++;
+			$size /= 1024;
+		}
+
+		$fixed = 0;
+		if ($size < 10)
+			$fixed = 2;
+		else if ($size < 100)
+			$fixed = 1;
+
+		switch ($mult) {
+			case 0:
+				return $size . ' B';
+			case 1:
+				return round($size, $fixed) . ' KB';
+			case 2:
+				return round($size, $fixed) . ' MB';
+			case 3:
+				return round($size, $fixed) . ' GB';
+
+			default:
+				return round($size, $fixed) . ' TB';
+		}
+	}
 }
 
 ?>
