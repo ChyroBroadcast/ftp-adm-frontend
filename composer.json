@@ -24,6 +24,7 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "twitter/bootstrap": "3.*",
         "components/jquery": "2.1.*",
+        "components/flag-icon-css": "0.7.*",
         "doctrine/doctrine-migrations-bundle": "^1.0",
         "jms/i18n-routing-bundle": "dev-master",
         "jms/translation-bundle": "1.1.*"

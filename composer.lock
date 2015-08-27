@@ -4,8 +4,46 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a106ec2addee9755eedb04423c6f3217",
+    "hash": "f8d86cd24380f5268c6bf47dd22ee2e9",
     "packages": [
+        {
+            "name": "components/flag-icon-css",
+            "version": "0.7.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lipis/flag-icon-css.git",
+                "reference": "db9d702ac15e74a84d5d859c9f3b1ce4c1882304"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lipis/flag-icon-css/zipball/db9d702ac15e74a84d5d859c9f3b1ce4c1882304",
+                "reference": "db9d702ac15e74a84d5d859c9f3b1ce4c1882304",
+                "shasum": ""
+            },
+            "type": "component",
+            "extra": {
+                "component": {
+                    "name": "flag-icon-css",
+                    "files": [
+                        "less/**",
+                        "css/**",
+                        "flags/**"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Panayiotis Lipiridis (Lipis)",
+                    "email": "lipiridis@gmail.com"
+                }
+            ],
+            "description": "CSS for vector based country flags",
+            "time": "2015-03-26 16:41:06"
+        },
         {
             "name": "components/jquery",
             "version": "2.1.4",
