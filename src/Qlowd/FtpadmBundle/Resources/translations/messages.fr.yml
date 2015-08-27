@@ -6,6 +6,14 @@ disj: ou
 username: Identifiant
 pass: Mot de passe
 msg.welcome: Bienvenue
-msg.log.succes: Identifiant ou mot de passe invalide.
-msg.log.fail: Connecté
-please.prefix: S'il vous plaît
+msg.log.success: Connecté.
+msg.log.fail: Identifiant ou mot de passe invalide.
+please.prefix: .
+
+menu.home: Accueil
+menu.list.account: Compte
+menu.list.logout: Se déconnecter
+
+ftp.account: Comptes FTP
+
+overview: Vue d'ensemble
