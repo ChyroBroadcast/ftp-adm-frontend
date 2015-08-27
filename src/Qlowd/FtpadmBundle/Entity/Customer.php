@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Customer
  *
- * @ORM\Table(name="Customer", uniqueConstraints={@ORM\UniqueConstraint(name="name", columns={"name"})})
+ * @ORM\Table(name="Customer", uniqueConstraints={@ORM\UniqueConstraint(name="name", columns={"name", "url"})})
  * @ORM\Entity
  */
 class Customer
@@ -76,7 +76,7 @@ class Customer
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -99,7 +99,7 @@ class Customer
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -122,7 +122,7 @@ class Customer
     /**
      * Get totalSpace
      *
-     * @return integer 
+     * @return integer
      */
     public function getTotalSpace()
     {
@@ -145,7 +145,7 @@ class Customer
     /**
      * Get usedSpace
      *
-     * @return integer 
+     * @return integer
      */
     public function getUsedSpace()
     {
@@ -168,7 +168,7 @@ class Customer
     /**
      * Get price
      *
-     * @return string 
+     * @return string
      */
     public function getPrice()
     {
@@ -201,10 +201,66 @@ class Customer
     /**
      * Get address
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getAddress()
     {
         return $this->address;
+    }
+    /**
+     * @var string
+     */
+    private $path;
+
+
+    /**
+     * Set path
+     *
+     * @param string $path
+     * @return Customer
+     */
+    public function setPath($path)
+    {
+        $this->path = $path;
+
+        return $this;
+    }
+
+    /**
+     * Get path
+     *
+     * @return string
+     */
+    public function getPath()
+    {
+        return $this->path;
+    }
+    /**
+     * @var string
+     */
+    private $url;
+
+
+    /**
+     * Set url
+     *
+     * @param string $url
+     * @return Customer
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
+
+        return $this;
+    }
+
+    /**
+     * Get url
+     *
+     * @return string
+     */
+    public function getUrl()
+    {
+        return $this->url;
     }
 }

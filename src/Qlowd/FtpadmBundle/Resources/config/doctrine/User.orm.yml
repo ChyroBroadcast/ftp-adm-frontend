@@ -55,6 +55,11 @@ Qlowd\FtpadmBundle\Entity\User:
             nullable: false
             comment: ''
             column: is_active
+        isAdmin:
+            type: boolean
+            nullable: false
+            comment: ''
+            column: is_admin
     manyToOne:
         customer:
             targetEntity: Customer

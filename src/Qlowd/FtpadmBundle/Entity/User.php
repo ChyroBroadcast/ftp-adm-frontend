@@ -316,4 +316,32 @@ class User implements AdvancedUserInterface, \Serializable
     }
 
 
+    /**
+     * @var boolean
+     */
+    private $isAdmin;
+
+
+    /**
+     * Set isAdmin
+     *
+     * @param boolean $isAdmin
+     * @return User
+     */
+    public function setIsAdmin($isAdmin)
+    {
+        $this->isAdmin = $isAdmin;
+
+        return $this;
+    }
+
+    /**
+     * Get isAdmin
+     *
+     * @return boolean 
+     */
+    public function getIsAdmin()
+    {
+        return $this->isAdmin;
+    }
 }

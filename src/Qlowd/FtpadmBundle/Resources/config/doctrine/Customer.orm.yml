@@ -5,6 +5,7 @@ Qlowd\FtpadmBundle\Entity\Customer:
         name:
             columns:
                 - name
+                - url
     id:
         id:
             type: integer
@@ -19,6 +20,12 @@ Qlowd\FtpadmBundle\Entity\Customer:
             type: string
             nullable: false
             length: 255
+            fixed: false
+            comment: ''
+        path:
+            type: text
+            nullable: false
+            length: null
             fixed: false
             comment: ''
         totalSpace:
@@ -38,6 +45,12 @@ Qlowd\FtpadmBundle\Entity\Customer:
             nullable: false
             precision: 10
             scale: 0
+            comment: ''
+        url:
+            type: string
+            nullable: false
+            length: 255
+            fixed: false
             comment: ''
     manyToMany:
         address:
