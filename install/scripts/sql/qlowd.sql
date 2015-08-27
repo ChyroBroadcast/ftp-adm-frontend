@@ -49,11 +49,11 @@ CREATE TABLE `Customer` (
   `total_space` bigint(20) NOT NULL,
   `used_space` bigint(20) NOT NULL,
   `price` decimal(10,0) NOT NULL,
-  `path` text NOT NULL,
+  `path` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `url` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`),
-  UNIQUE KEY `path` (`path`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  UNIQUE KEY `name` (`name`,`url`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -95,6 +95,7 @@ CREATE TABLE `User` (
   `access` tinyint(1) NOT NULL,
   `phone` longtext COLLATE utf8_unicode_ci NOT NULL,
   `is_active` tinyint(1) NOT NULL,
+  `is_admin` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `IDX_2DA1797781398E09` (`customer`),
   CONSTRAINT `FK_2DA1797781398E09` FOREIGN KEY (`customer`) REFERENCES `Customer` (`id`)

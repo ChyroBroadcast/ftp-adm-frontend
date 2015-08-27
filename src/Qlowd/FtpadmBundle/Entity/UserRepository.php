@@ -19,13 +19,14 @@ class UserRepository extends EntityRepository implements UserProviderInterface
             if (inet_pton($host))
                 $customer = 'qlowd';
             else {
-                $customer = array_values(explode($host))[0];
+                $customer = strtolower(array_values(explode($host))[0]);
             }
 
             $user = $this->createQueryBuilder('u')
                 ->leftJoin('Qlowd\FtpadmBundle\Entity\Customer', 'c')
                 ->where('u.login = :username')
-                ->andWhere('c.name = :customer')
+                ->andWhere('c.url = :customer')
+                ->andWhere('u.isAdmin = 0')
                 ->setParameter('username', $username)
                 ->setParameter('customer', $customer)
                 ->getQuery()

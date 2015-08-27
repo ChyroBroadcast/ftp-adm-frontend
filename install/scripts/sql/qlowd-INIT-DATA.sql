@@ -1,4 +1,4 @@
--- MySQL dump 10.13  Distrib 5.5.14, for osx10.6 (i386)
+-- MySQL dump 10.13  Distrib 5.5.14
 --
 -- Host: localhost    Database: symfony
 -- ------------------------------------------------------
@@ -16,55 +16,15 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `Customer`
---
-
-DROP TABLE IF EXISTS `Customer`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Customer` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `total_space` bigint(20) NOT NULL,
-  `used_space` bigint(20) NOT NULL,
-  `price` decimal(10,0) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `Customer`
 --
 
 LOCK TABLES `Customer` WRITE;
 /*!40000 ALTER TABLE `Customer` DISABLE KEYS */;
-INSERT INTO `Customer` VALUES (1,'Qlowd',0,0,0, '/mnt/raid/ftp');
+INSERT INTO `Customer` VALUES (1,'Qlowd',0,0,0, '/mnt/raid/ftp', 'qlowd');
 /*!40000 ALTER TABLE `Customer` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `User`
---
-
-DROP TABLE IF EXISTS `User`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `User` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `customer` int(11) DEFAULT NULL,
-  `login` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `mail` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `fullname` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `access` tinyint(1) NOT NULL,
-  `phone` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `is_active` tinyint(1) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `IDX_2DA1797781398E09` (`customer`),
-  CONSTRAINT `FK_2DA1797781398E09` FOREIGN KEY (`customer`) REFERENCES `Customer` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `User`
