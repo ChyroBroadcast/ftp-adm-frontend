@@ -25,8 +25,8 @@ $ php composer.phar update
 
 Install MySQL DB with init data :
 ```
-$ mysql -u root -p YOURDB < install/qlowd.sql
-$ mysql -u root -p YOURDB < install/qlowd-INIT-DATA.sql # Generate first company & user
+$ mysql -u root -p YOURDB < install/scripts/sql/qlowd.sql 
+$ mysql -u root -p YOURDB < install/scripts/sql/qlowd-INIT-DATA.sql # Generate first company & user
 ```
 
 And to launch app in dev mode :
