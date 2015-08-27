@@ -6,6 +6,14 @@ disj: or
 username: Username
 pass: Password
 msg.welcome: Welcome
-msg.log.succes: Invalid credentials.
-msg.log.fail: Connected
+msg.log.success: Connected.
+msg.log.fail: Invalid credentials.
 please.prefix: Please
+
+menu.home: Home
+menu.list.account: Account
+menu.list.logout: Logout
+
+ftp.account: FTP Accounts
+
+overview: Overview

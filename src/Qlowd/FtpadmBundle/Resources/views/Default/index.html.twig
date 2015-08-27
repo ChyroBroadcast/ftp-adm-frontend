@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-        Overview
+        {{ 'overview'|trans }}
 {% endblock %}
 
 
 {% block body %}
 <div class="page-header">
-  <h1>{{ 'welcome'|trans }} {{ app.user.fullname }}</h1>
+  <h1>{{ 'msg.welcome'|trans }} {{ app.user.fullname }}</h1>
 </div>
 {% endblock %}
