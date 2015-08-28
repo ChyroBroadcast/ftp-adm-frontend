@@ -7,10 +7,8 @@
                 {% stylesheets '@bootstrap_css' %}
                         <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}"/>
                 {% endstylesheets %}
-                {% stylesheets '@flag_icons' %}
-                        <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}"/>
-                {% endstylesheets %}
                 <link href="{{ asset('bundles/qlowdftpadm/css/default.css') }}" type="text/css" rel="stylesheet" />
+                <link rel="stylesheet" type="text/css" href="{{ asset('bundles/qlowdftpadm/css/flag-icon.min.css') }}"/>
             {% endblock %}
 
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
