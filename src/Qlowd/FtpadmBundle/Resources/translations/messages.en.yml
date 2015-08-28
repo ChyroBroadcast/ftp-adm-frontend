@@ -18,3 +18,11 @@ ftp.account: FTP Accounts
 
 overview: Overview
 overview.using_space: You are using
+
+user.login: Login
+user.mail: Mail
+user.fullname: Full name
+user.phone: Phone
+user.isActive: Is active
+user.modify: Modify
+user.delete: Delete

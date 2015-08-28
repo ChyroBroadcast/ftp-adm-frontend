@@ -7,6 +7,50 @@
 
 {% block body %}
 <div class="page-header">
-  <h1>{{ 'ftp.account'|trans }}</h1>
+	<h1>{{ 'ftp.account'|trans }}</h1>
+		<table class="table">
+			<thead>
+				<th>{{ 'user.login'|trans }}</th>
+				<th>{{ 'user.mail'|trans }}</th>
+				<th>{{ 'user.fullname'|trans }}</th>
+				<th>{{ 'user.phone'|trans }}</th>
+				<th class="text-center">{{ 'user.isActive'|trans }}</th>
+				<th class="text-center">{{ 'user.modify'|trans }}</th>
+				<th class="text-center">{{ 'user.delete'|trans }}</th>
+			</thead>
+			<tbody>
+				{% for u in user %}
+					<tr>
+						<td>{{ u.login }}</td>
+						<td>{{ u.mail }}</td>
+						<td>{{ u.fullname }}</td>
+						<td>{{ u.phone }}</td>
+						<td class="text-center">
+							{% if u.isActive == 0 %}
+								<button type="button" class="btn btn-danger btn-xs" aria-label="Inactive">
+									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+								</button>
+							{% else %}
+								<button type="button" class="btn btn-success btn-xs" aria-label="Active">
+									<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+								</button>
+							{% endif %}
+						</td>
+						<td class="text-center">
+							<button type="button" class="btn btn btn-default btn-xs" aria-label="Edit">
+								<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+							</button>
+						</td>
+						<td class="text-center">
+							{% if app.user.login != u.login %}
+								<button type="button" class="btn btn btn-danger btn-xs" aria-label="Delete">
+									<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+								</button>
+							{% endif %}
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+	</table>
 </div>
 {% endblock %}
