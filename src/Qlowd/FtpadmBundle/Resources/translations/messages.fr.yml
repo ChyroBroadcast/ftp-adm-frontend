@@ -19,6 +19,7 @@ lang.select: Langue
 ftp.account: Comptes FTP
 
 overview: Vue d'ensemble
+overview.quota: Quota
 overview.using_space: Vous utilisez
 
 user.login: Login

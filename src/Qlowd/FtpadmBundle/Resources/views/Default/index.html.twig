@@ -25,7 +25,7 @@
 {% set progress_width = 10000 / customer.pct_used %}
 {% endif %}
 
-<h2>Quota&nbsp;:</h2>
+<h2>{{ 'overview.quota' | trans }}&nbsp;:</h2>
 <div class="progress" style="height: 40px;">
 	<div class="progress-bar progress-bar-{{ progress_bar_color }}" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{ progress_width }}%;">
 	</div>
