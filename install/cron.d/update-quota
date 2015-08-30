@@ -1,5 +1,6 @@
 #
-# cron.d/update-quota -- synchronize xfs_quota into database
+# cron.d/update-quota -- synchronize xfs_quota into database and send email
 #
 
-*/5 * * * root update-quoga.pl
+*/5 * * * root update-quota.pl --update_quota
+@daily root update-quota --alert
