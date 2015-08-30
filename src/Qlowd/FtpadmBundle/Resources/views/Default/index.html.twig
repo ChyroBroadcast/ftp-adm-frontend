@@ -11,6 +11,7 @@
 </div>
 
 {% set progress_bar_color = 'success' %}
+{% set progress_width = customer.pct_used %}
 
 {% if customer.pct_used > 80 %}
 {% set progress_bar_color = 'warning' %}
@@ -20,10 +21,18 @@
 {% set progress_bar_color = 'danger' %}
 {% endif %}
 
-Quota&nbsp;:
-<div class="progress" style="height: 48px;">
-	<div class="progress-bar progress-bar-{{ progress_bar_color }}" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{ customer.pct_used_p }};">
+{% if customer.pct_used > 100 %}
+{% set progress_width = 10000 / customer.pct_used %}
+{% endif %}
+
+<h2>Quota&nbsp;:</h2>
+<div class="progress" style="height: 40px;">
+	<div class="progress-bar progress-bar-{{ progress_bar_color }}" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{ progress_width }}%;">
 	</div>
+	{% if customer.pct_used > 100 %}
+		<div class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{ 100 - progress_width }}%;">
+		</div>
+	{% endif %}
 </div>
 
 <span style="font-size: 2em">
