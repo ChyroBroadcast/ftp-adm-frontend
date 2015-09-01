@@ -33,4 +33,5 @@ user.delete: Delete
 util.size.B: B
 util.size.KB: KB
 util.size.MB: MB
+util.size.GB: GB
 util.size.TB: TB
