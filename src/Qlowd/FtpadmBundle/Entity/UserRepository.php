@@ -15,18 +15,18 @@ class UserRepository extends EntityRepository implements UserProviderInterface
         public function loadUserByUsername($username)
         {
             // Manage Customers by vhost. Parse host
-            $host = $_SERVER['REMOTE_ADDR'];
-            if (inet_pton($host))
+            $host = $_SERVER['SERVER_NAME'];
+            if(filter_var($host, FILTER_VALIDATE_IP) !== false) {
                 $customer = 'qlowd';
-            else {
-                $customer = strtolower(array_values(explode($host))[0]);
+            } else {
+                $customer = strtolower(array_values(explode('.', $host))[0]);
             }
 
             $user = $this->createQueryBuilder('u')
-                ->leftJoin('Qlowd\FtpadmBundle\Entity\Customer', 'c')
+                ->leftJoin('Qlowd\FtpadmBundle\Entity\Customer', 'c', 'WITH', 'c.id = u.customer')
                 ->where('u.login = :username')
                 ->andWhere('c.url = :customer')
-                ->andWhere('u.isAdmin = 0')
+                ->andWhere('u.isAdmin = 1')
                 ->setParameter('username', $username)
                 ->setParameter('customer', $customer)
                 ->getQuery()

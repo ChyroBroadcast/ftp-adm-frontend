@@ -15,8 +15,8 @@ class DefaultController extends Controller {
 		/**
 		 * TODO: 'qlowd' should be changed with correct customer
 		 */
-		$customer = $doc->getRepository('QlowdFtpadmBundle:Customer')->findOneByName('qlowd');
-		$user = $doc->getRepository('QlowdFtpadmBundle:User')->findAll();
+      $user = $this->get('security.context')->getToken()->getUser();
+      $customer = $doc->getRepository('QlowdFtpadmBundle:Customer')->findOneById($user->getId());
 
         return $this->render('QlowdFtpadmBundle:Default:index.html.twig', array(
 			'customer' => array(

@@ -4,6 +4,7 @@ namespace Qlowd\FtpadmBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+//use Qlowd\FtpadmBundle\Entity as Security; // Activate to generate password
 
 class SecurityController extends Controller
 {
@@ -22,8 +23,8 @@ class SecurityController extends Controller
             $lastUsername = $authenticationUtils->getLastUsername();
 
             $encoded = '';
-            /* // Used to generate first password :)
-            $user = new Security\User();
+             // Used to generate first password :)
+            /*$user = new Security\User();
             $plainPassword = 'qlowd';
             $encoder = $this->container->get('security.password_encoder');
             $encoded = $encoder->encodePassword($user, $plainPassword); */

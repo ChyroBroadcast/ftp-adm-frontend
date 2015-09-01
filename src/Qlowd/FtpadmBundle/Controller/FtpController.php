@@ -13,9 +13,10 @@ class FtpController extends Controller
 	public function indexAction()
 	{
 		$em = $this->getDoctrine()->getManager();
-		$user = $em->getRepository('QlowdFtpadmBundle:User')->findAll();
+		$user = $this->get('security.context')->getToken()->getUser();
+		$users = $em->getRepository('QlowdFtpadmBundle:User')->findByCustomer($user->getCustomer());
 
-		return $this->render('QlowdFtpadmBundle:Ftp:index.html.twig', array('user' => $user));
+		return $this->render('QlowdFtpadmBundle:Ftp:index.html.twig', array('user' => $users));
 	}
 }
 
