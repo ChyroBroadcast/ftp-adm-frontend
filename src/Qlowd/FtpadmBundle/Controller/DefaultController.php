@@ -15,25 +15,26 @@ class DefaultController extends Controller {
 		/**
 		 * TODO: 'qlowd' should be changed with correct customer
 		 */
-      $user = $this->get('security.context')->getToken()->getUser();
-      $customer = $doc->getRepository('QlowdFtpadmBundle:Customer')->findOneById($user->getId());
+		$user = $this->get('security.context')->getToken()->getUser();
+		$customer = $doc->getRepository('QlowdFtpadmBundle:Customer')->findOneById($user->getId());
 
-        return $this->render('QlowdFtpadmBundle:Default:index.html.twig', array(
+		$trans = $this->get('translator');
+
+		return $this->render('QlowdFtpadmBundle:Default:index.html.twig', array(
 			'customer' => array(
 				'id' => $customer->getId(),
 				'name' => $customer->getName(),
 				'used_space' => intval($customer->getUsedSpace()),
-				'used_space_p' => DefaultController::convertSize(intval($customer->getUsedSpace())),
+				'used_space_p' => DefaultController::convertSize(intval($customer->getUsedSpace()), $trans),
 				'total_space' => intval($customer->getTotalSpace()),
-				'total_space_p' => DefaultController::convertSize(intval($customer->getTotalSpace())),
+				'total_space_p' => DefaultController::convertSize(intval($customer->getTotalSpace()), $trans),
 				'pct_used' => round(100.0 * $customer->getUsedSpace() / $customer->getTotalSpace(), 0),
 				'pct_used_p' => round(100.0 * $customer->getUsedSpace() / $customer->getTotalSpace(), 0) . '%'
-			),
-			'debug' => DefaultController::convertSize(10000000000000)
+			)
 		));
     }
 
-	public static function convertSize($size) {
+	public static function convertSize($size, $trans) {
 		$mult = 0;
 		while ($size > 1024 && $mult < 4) {
 			$mult++;
@@ -48,16 +49,16 @@ class DefaultController extends Controller {
 
 		switch ($mult) {
 			case 0:
-				return $size . ' B';
+				return $size . $trans->trans('util.size.B');
 			case 1:
-				return round($size, $fixed) . ' KB';
+				return round($size, $fixed) . $trans->trans('util.size.KB');
 			case 2:
-				return round($size, $fixed) . ' MB';
+				return round($size, $fixed) . $trans->trans('util.size.MB');
 			case 3:
-				return round($size, $fixed) . ' GB';
+				return round($size, $fixed) . $trans->trans('util.size.GB');
 
 			default:
-				return round($size, $fixed) . ' TB';
+				return round($size, $fixed) . $trans->trans('util.size.TB');
 		}
 	}
 }

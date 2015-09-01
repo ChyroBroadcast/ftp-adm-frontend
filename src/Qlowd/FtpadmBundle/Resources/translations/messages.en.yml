@@ -29,3 +29,8 @@ user.phone: Phone
 user.isActive: Is active
 user.modify: Modify
 user.delete: Delete
+
+util.size.B: B
+util.size.KB: KB
+util.size.MB: MB
+util.size.TB: TB

@@ -29,3 +29,8 @@ user.phone: Téléphone
 user.isActive: Actif
 user.modify: Modifier
 user.delete: Supprimer
+
+util.size.B: o
+util.size.KB: Ko
+util.size.MB: Mo
+util.size.TB: To
