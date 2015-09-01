@@ -32,7 +32,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `User` WRITE;
 /*!40000 ALTER TABLE `User` DISABLE KEYS */;
-INSERT INTO `User` VALUES (1,1,'qlowd','zedev@qlowd.io','My Qlowd','k66cDrANvtavVvfdSAIMW3x0ujLLcIeQ6pz+LcuwwEj+J0/PW5Hvww==',0,'',1);
+INSERT INTO `User` VALUES (1,1,'qlowd','zedev@qlowd.io','My Qlowd','k66cDrANvtavVvfdSAIMW3x0ujLLcIeQ6pz+LcuwwEj+J0/PW5Hvww==',0,'',1,0);
 /*!40000 ALTER TABLE `User` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
