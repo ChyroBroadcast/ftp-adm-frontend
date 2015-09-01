@@ -40,6 +40,12 @@ Qlowd\FtpadmBundle\Entity\Customer:
             unsigned: true
             comment: ''
             column: used_space
+        maxMonthlySpace:
+            type: bigint
+            nullable: false
+            unsigned: true
+            comment: ''
+            column: max_monthly_space
         price:
             type: decimal
             nullable: false

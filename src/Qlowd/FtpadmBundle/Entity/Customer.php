@@ -263,4 +263,32 @@ class Customer
     {
         return $this->url;
     }
+    /**
+     * @var integer
+     */
+    private $maxMonthlySpace;
+
+
+    /**
+     * Set maxMonthlySpace
+     *
+     * @param integer $maxMonthlySpace
+     * @return Customer
+     */
+    public function setMaxMonthlySpace($maxMonthlySpace)
+    {
+        $this->maxMonthlySpace = $maxMonthlySpace;
+
+        return $this;
+    }
+
+    /**
+     * Get maxMonthlySpace
+     *
+     * @return integer 
+     */
+    public function getMaxMonthlySpace()
+    {
+        return $this->maxMonthlySpace;
+    }
 }
