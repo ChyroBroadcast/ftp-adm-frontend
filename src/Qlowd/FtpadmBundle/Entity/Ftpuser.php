@@ -224,4 +224,88 @@ class Ftpuser
     {
         return $this->id;
     }
+    /**
+     * @var integer
+     */
+    private $logcount;
+
+    /**
+     * @var \DateTime
+     */
+    private $logindate;
+
+    /**
+     * @var \DateTime
+     */
+    private $modifdate;
+
+
+    /**
+     * Set logcount
+     *
+     * @param integer $logcount
+     * @return Ftpuser
+     */
+    public function setLogcount($logcount)
+    {
+        $this->logcount = $logcount;
+
+        return $this;
+    }
+
+    /**
+     * Get logcount
+     *
+     * @return integer 
+     */
+    public function getLogcount()
+    {
+        return $this->logcount;
+    }
+
+    /**
+     * Set logindate
+     *
+     * @param \DateTime $logindate
+     * @return Ftpuser
+     */
+    public function setLogindate($logindate)
+    {
+        $this->logindate = $logindate;
+
+        return $this;
+    }
+
+    /**
+     * Get logindate
+     *
+     * @return \DateTime 
+     */
+    public function getLogindate()
+    {
+        return $this->logindate;
+    }
+
+    /**
+     * Set modifdate
+     *
+     * @param \DateTime $modifdate
+     * @return Ftpuser
+     */
+    public function setModifdate($modifdate)
+    {
+        $this->modifdate = $modifdate;
+
+        return $this;
+    }
+
+    /**
+     * Get modifdate
+     *
+     * @return \DateTime 
+     */
+    public function getModifdate()
+    {
+        return $this->modifdate;
+    }
 }

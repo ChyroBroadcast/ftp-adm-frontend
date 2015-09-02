@@ -44,4 +44,21 @@ Qlowd\FtpadmBundle\Entity\Ftpuser:
             length: null
             fixed: false
             comment: ''
+        logcount:
+            type: integer
+            nullable: true
+            unsigned: true
+            comment: ''
+        logindate:
+            type: datetime
+            fixed: false
+            unsigned: true
+            nullable: false
+            comment: ''
+        modifdate:
+            type: datetime
+            fixed: false
+            unsigned: true
+            nullable: false
+            comment: ''
     lifecycleCallbacks: {  }

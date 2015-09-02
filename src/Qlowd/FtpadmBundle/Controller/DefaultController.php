@@ -12,9 +12,7 @@ class DefaultController extends Controller {
 	*/
     public function indexAction() {
 		$doc = $this->container->get('doctrine')->getManager();
-		/**
-		 * TODO: 'qlowd' should be changed with correct customer
-		 */
+
 		$user = $this->get('security.context')->getToken()->getUser();
 		$customer = $doc->getRepository('QlowdFtpadmBundle:Customer')->findOneById($user->getId());
 
