@@ -16,3 +16,7 @@ logout:
 qlowd_ftpadm_ftp:
     path:     /ftp
     defaults: { _controller: QlowdFtpadmBundle:Ftp:index }
+    
+qlowd_ftpadm_account:
+      path:     /account
+      defaults: { _controller: QlowdFtpadmBundle:Account:index }

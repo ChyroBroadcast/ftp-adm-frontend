@@ -30,6 +30,8 @@ user.isActive: Actif
 user.modify: Modifier
 user.delete: Supprimer
 
+account.information: Informations
+
 util.size.B: o
 util.size.KB: Ko
 util.size.MB: Mo

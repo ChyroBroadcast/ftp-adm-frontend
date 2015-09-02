@@ -24,7 +24,7 @@
             {% endif %}
             <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="#">{{ 'menu.list.account'|trans }}</a></li>
+            <li><a href="{{ path('qlowd_ftpadm_account')}}">{{ 'menu.list.account'|trans }}</a></li>
             <li role="separator" class="divider"></li>
             <li><a href="{{ path('logout', {"_locale": "en"}) }}">{{ 'menu.list.logout'|trans }}</a></li>
           </ul>
