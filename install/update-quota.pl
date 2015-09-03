@@ -56,7 +56,7 @@ unless ($email) {
 	exit 2;
 }
 
-my $update = $dbh->prepare('UPDATE Customer SET used_space = ? WHERE path = ?');
+my $update = $dbh->prepare('UPDATE Customer SET used_space = ?, max_monthly_space = GREATEST(max_monthly_space, ?) WHERE path = ?');
 unless ($update) {
 	print "Failed to prepare query because $dbh->errstr";
 	exit 2;
@@ -110,7 +110,7 @@ foreach (@lines) {
 			$smtp->quit();
 		}
 		elsif ($do_update_quota) {
-			if ( $update->execute( $used, $dir ) ) {
+			if ( $update->execute( $used, $used, $dir ) ) {
 				$nb_updated++;
 			}
 			else {
