@@ -25,10 +25,32 @@ overview.using_space: Vous utilisez
 user.login: Login
 user.mail: Email
 user.fullname: Nom complet
+user.password1: Mot de passe
+user.password2: Confirmer mot de passe
 user.phone: Téléphone
-user.isActive: Actif
-user.modify: Modifier
-user.delete: Supprimer
+user.is_active: Compte actif
+user.is_admin: Compte administrateur
+user.action: Action
+ftpuser.access: Droits FTP
+ftpuser.chroot: Chroot
+ftpuser.homedirectory: Répertoire personnel
+
+colon: &nbsp;:
+qmark: &nbsp;?
+
+add: Ajouter
+addUser: Ajouter un utilisateur
+cancel: Annuler
+edit: Modifier
+editUser: Modifier l'utilisateur
+del: Supprimer
+delUser: Suppression de l'utilisateur
+read: Lecture
+sureDelUser: Êtes-vous sûr de supprimer l'utilisateur
+write: Écriture
+
+reset: Effacer
+rtul: Revenir à la liste des utilisateurs
 
 account.information: Informations
 

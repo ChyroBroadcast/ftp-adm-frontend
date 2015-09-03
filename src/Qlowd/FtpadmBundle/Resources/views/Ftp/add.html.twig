@@ -1,0 +1,106 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{% if user.login == null %}
+		{{ 'addUser'|trans }}
+	{% else %}
+		{{ 'editUser'|trans }}&nbsp;{{ user.login }}
+	{% endif %}
+{% endblock %}
+
+
+{% block body %}
+<div class="page-header">
+	<h1>
+		{% if user.login == null %}
+			{{ 'addUser'|trans }}
+		{% else %}
+			{{ 'editUser'|trans }}&nbsp;{{ user.login }}
+		{% endif %}
+	</h1>
+</div>
+	<form class="form-horizontal" role="form" action="" method="post" enctype="multipart/form-data">
+
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="login">{{ 'user.login'|trans }}{{ 'colon'|trans }}</label>
+			<div class="col-sm-10">
+				<input class="form-control" type="text" id="login" name="login" placeholder="{{ 'user.login'|trans }}" value="{{ user.login }}" />
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="mail">{{ 'user.mail'|trans }}{{ 'colon'|trans }}</label>
+			<div class="col-sm-10">
+				<input class="form-control" type="email" id="mail" name="mail" placeholder="{{ 'user.mail'|trans }}" value="{{ user.mail }}" />
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="fullname">{{ 'user.fullname'|trans }}{{ 'colon'|trans }}</label>
+			<div class="col-sm-10">
+				<input class="form-control" type="text" id="fullname" name="fullname" placeholder="{{ 'user.fullname'|trans }}" value="{{ user.fullname }}" />
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="password1">{{ 'user.password1'|trans }}{{ 'colon'|trans }}</label>
+			<div class="col-sm-10">
+				<input class="form-control" type="text" id="password1" name="password1" placeholder="{{ 'user.password1'|trans }}" value="" />
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="password2">{{ 'user.password2'|trans }}{{ 'colon'|trans }}</label>
+			<div class="col-sm-10">
+				<input class="form-control" type="text" id="password2" name="password2" placeholder="{{ 'user.password2'|trans }}" value="" />
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="phone">{{ 'user.phone'|trans }}{{ 'colon'|trans }}</label>
+			<div class="col-sm-10">
+				<input class="form-control" type="text" id="phone" name="phone" placeholder="{{ 'user.phone'|trans }}" value="{{ user.phone }}" />
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="isactive">{{ 'user.is_active'|trans }}{{ 'colon'|trans }}</label>
+			<div class="col-xs-1">
+				<input class="form-control input-sm" type="checkbox" id="isactive" name="isactive" value="{{ user.isActive }}" {% if user.isActive == 1 %} checked {% endif %}/>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="is_admin">{{ 'user.is_admin'|trans }}{{ 'colon'|trans }}</label>
+			<div class="col-xs-1">
+				<input class="form-control input-sm" type="checkbox" id="is_admin" name="is_admin" value="{{ user.isAdmin }}" {% if user.isAdmin == 1 %} checked {% endif %}/>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="read">{{ 'read'|trans }}{{ 'colon'|trans }}</label>
+			<div class="col-xs-1">
+				<input class="form-control input-sm" type="checkbox" id="read" name="read" value="{{ ftpuser.access }}" {% if ftpuser.access == 'read' or ftpuser.access == 'read_write' %} checked {% endif %}/>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="write">{{ 'write'|trans }}{{ 'colon'|trans }}</label>
+			<div class="col-xs-1">
+				<input class="form-control input-sm" type="checkbox" id="write" name="write" value="{{ ftpuser.access }}" {% if ftpuser.access == 'write' or ftpuser.access == 'read_write' %} checked {% endif %}/>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="chroot">{{ 'ftpuser.chroot'|trans }}{{ 'colon'|trans }}</label>
+			<div class="col-xs-1">
+				<input class="form-control input-sm" type="checkbox" id="chroot" name="chroot" value="{{ ftpuser.chroot }}" {% if ftpuser.chroot == 1 %} checked {% endif %}/>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="homedirectory">{{ 'ftpuser.homedirectory'|trans }}{{ 'colon'|trans }}</label>
+			<div class="col-sm-10">
+				<input class="form-control" type="text" id="homedirectory" name="homedirectory" placeholder="{{ 'ftpuser.homedirectory'|trans }}" value="{{ ftpuser.homedirectory }}" />
+			</div>
+		</div>
+
+		<div class="form-group">
+			<div class="col-sm-offset-5 col-sm-10">
+				<button class="btn btn-default" name="save" type="submit">{% if user.login == null %}{{ 'add'|trans }}{% else %}{{ 'edit'|trans }}{% endif %}</button>
+				<button class="btn btn-default" name="reset" type="reset">{{ 'reset'|trans }}</button>
+			</div>
+		</div>
+
+	</form>
+	<p><a href="{{ path('qlowd_ftpadm_ftp') }}">{{ 'rtul'|trans }}</a></p>
+{% endblock %}

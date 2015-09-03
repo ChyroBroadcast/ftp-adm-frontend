@@ -15,8 +15,20 @@ logout:
 
 qlowd_ftpadm_ftp:
     path:     /ftp
-    defaults: { _controller: QlowdFtpadmBundle:Ftp:index }
+    defaults: { _controller: QlowdFtpadmBundle:Ftp:list }
     
 qlowd_ftpadm_account:
       path:     /account
       defaults: { _controller: QlowdFtpadmBundle:Account:index }
+
+qlowd_ftpadm_ftp_add:
+    path:     /ftp/add
+    defaults: { _controller: QlowdFtpadmBundle:Ftp:edit }
+
+qlowd_ftpadm_ftp_edit:
+    path:     /ftp/edit/{login}
+    defaults: { _controller: QlowdFtpadmBundle:Ftp:edit, login: null }
+
+qlowd_ftpadm_ftp_del:
+    path:     /ftp/del/{login}
+    defaults: { _controller: QlowdFtpadmBundle:Ftp:del, login: null }

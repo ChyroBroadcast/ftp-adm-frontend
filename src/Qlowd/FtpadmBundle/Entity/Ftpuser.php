@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Ftpuser
  *
- * @ORM\Table(name="ftpuser")
+ * @ORM\Table(name="FtpUser")
  * @ORM\Entity
  */
 class Ftpuser

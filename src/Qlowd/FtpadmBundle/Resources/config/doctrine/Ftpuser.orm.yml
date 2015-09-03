@@ -1,6 +1,6 @@
 Qlowd\FtpadmBundle\Entity\Ftpuser:
     type: entity
-    table: ftpuser
+    table: FtpUser
     id:
         id:
             type: integer

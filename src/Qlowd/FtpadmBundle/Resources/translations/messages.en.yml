@@ -25,10 +25,32 @@ overview.using_space: You are using
 user.login: Login
 user.mail: Mail
 user.fullname: Full name
+user.password1: Password
+user.password2: Confirm password
 user.phone: Phone
-user.isActive: Is active
-user.modify: Modify
-user.delete: Delete
+user.is_active: Active account
+user.is_admin: Administrator account
+user.action: Action
+ftpuser.access: FTP rights
+ftpuser.chroot: Chroot
+ftpuser.homedirectory: Home directory
+
+colon: :
+qmark: ?
+
+add: Add
+addUser: Add a user
+cancel: Cancel
+edit: Edit
+editUser: Edit user
+del: Delete
+delUser: User deletion
+read: Read
+sureDelUser: Are you sure to delete
+write: Write
+
+reset: Reset
+rtul: Return to users list
 
 account.information: Informations
 
