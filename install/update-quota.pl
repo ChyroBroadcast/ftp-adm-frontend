@@ -50,7 +50,7 @@ unless ($dbh) {
 	exit 2;
 }
 
-my $email = $dbh->prepare('SELECT fullname, mail FROM User WHERE is_admin AND customer = (SELECT id FROM Customer WHERE path = \'/mnt/raid/\' LIMIT 1)');
+my $email = $dbh->prepare('SELECT fullname, email FROM User WHERE is_admin AND customer = (SELECT id FROM Customer WHERE path = ? LIMIT 1)');
 unless ($email) {
 	print "Failed to prepare query because $dbh->errstr";
 	exit 2;
@@ -83,7 +83,7 @@ foreach (@lines) {
 				next;
 			}
 
-			unless ( $email->row > 0 ) {
+			unless ( $email->rows > 0 ) {
 				print "No admin user found from customer ($dir)\n";
 				next;
 			}
@@ -91,7 +91,7 @@ foreach (@lines) {
 			my $user = '';
 			my @emails;
 
-			while ( my $row = $email->fetchrow_array ) {
+			while ( my $row = $email->fetchrow_arrayref ) {
 				$user .= ', ' if length $user > 0;
 				$user .= $row->[0];
 
