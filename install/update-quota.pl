@@ -46,26 +46,30 @@ select $log_fd;
 
 my $dbh = DBI->connect( "DBI:mysql:$db:$host", $user, $pass );
 unless ($dbh) {
-	print "Failed to connect to database because $DBI::errstr";
-	exit 2;
+    print "Failed to connect to database because $DBI::errstr";
+    exit 2;
 }
 
-my $email = $dbh->prepare('SELECT fullname, email FROM User WHERE is_admin AND customer = (SELECT id FROM Customer WHERE path = ? LIMIT 1)');
+my $email = $dbh->prepare(
+    'SELECT fullname, email FROM User WHERE is_admin AND customer = (SELECT id FROM Customer WHERE path = ? LIMIT 1)'
+);
 unless ($email) {
-	print "Failed to prepare query because $dbh->errstr";
-	exit 2;
+    print "Failed to prepare query because $dbh->errstr";
+    exit 2;
 }
 
-my $update = $dbh->prepare('UPDATE Customer SET used_space = ?, max_monthly_space = GREATEST(max_monthly_space, ?) WHERE path = ?');
+my $update = $dbh->prepare(
+    'UPDATE Customer SET used_space = ?, max_monthly_space = GREATEST(max_monthly_space, ?) WHERE path = ?'
+);
 unless ($update) {
-	print "Failed to prepare query because $dbh->errstr";
-	exit 2;
+    print "Failed to prepare query because $dbh->errstr";
+    exit 2;
 }
 
 my @lines = qx!xfs_quota -x -c "df -N"!;
 if ($?) {
-	print "Failed to run 'xfs_quota' because $@";
-	exit 2;
+    print "Failed to run 'xfs_quota' because $@";
+    exit 2;
 }
 
 my $nb_updated = 0;
@@ -74,49 +78,54 @@ foreach (@lines) {
 
     if (/^(.+?)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)%\s+(.+)$/) {
         my $used     = $3 * 1024;
-		my $pct_used = $5;
+        my $pct_used = $5;
         my $dir      = $6;
 
-		if ( $do_alert_quota and $pct_used >= 80 ) {
-			unless ( $email->execute($dir) ) {
-				print "Failed to get admin users from customer ($dir) because $email->errstr\n";
-				next;
-			}
+        if ( $do_alert_quota and $pct_used >= 80 ) {
+            unless ( $email->execute($dir) ) {
+                print "Failed to get admin users from customer ($dir) because $email->errstr\n";
+                next;
+            }
 
-			unless ( $email->rows > 0 ) {
-				print "No admin user found from customer ($dir)\n";
-				next;
-			}
+            unless ( $email->rows > 0 ) {
+                print "No admin user found from customer ($dir)\n";
+                next;
+            }
 
-			my $user = '';
-			my @emails;
+            my $user = '';
+            my @emails;
 
-			while ( my $row = $email->fetchrow_arrayref ) {
-				$user .= ', ' if length $user > 0;
-				$user .= $row->[0];
+            while ( my $row = $email->fetchrow_arrayref ) {
+                $user .= ', ' if length $user > 0;
+                $user .= $row->[0];
 
-				push @emails, '"' . $row->[0] . '" <' . $row->[1] . '>';
-			}
+                push @emails, '"' . $row->[0] . '" <' . $row->[1] . '>';
+            }
 
-			my $message = "Dear $user\n\nYour ftp account's space is runnin low (used: $pct_used%).\n\nBest regards\nQlowd";
+            my $message = "Dear $user\n\nYour ftp account's space is running low (used: $pct_used%).\n\nBest regards\nQlowd";
 
-			my $smtp = Net::SMTP->new('localhost');
-			$smtp->mail('Qlowd (no-reply) <no-replay@qlowd.io>');
-			$smtp->to(@emails, { SkipBad => 1 });
-			$smtp->cc('Qlowd support <support@qlowd.io>');
-			$smtp->data();
-			$smtp->datasend('From: Qlowd (no-reply) <no-reply@qlowd.io>' . "\r\nTo: " . join(', ', @emails) . "\r\nCC: " . 'Qlowd support <support@qlowd.io>' . "\r\n$message\r\n");
-			$smtp->dataend();
-			$smtp->quit();
-		}
-		elsif ($do_update_quota) {
-			if ( $update->execute( $used, $used, $dir ) ) {
-				$nb_updated++;
-			}
-			else {
-				print "Failed to update customer '$dir' with used_space='$used' because $update->errstr\n";
-			}
-		}
+            my $smtp = Net::SMTP->new('localhost');
+            $smtp->mail('Qlowd (no-reply) <no-replay@qlowd.io>');
+            $smtp->to( @emails, { SkipBad => 1 } );
+            $smtp->cc('Qlowd support <support@qlowd.io>');
+            $smtp->data();
+            $smtp->datasend( 'From: Qlowd (no-reply) <no-reply@qlowd.io>'
+                    . "\r\nTo: "
+                    . join( ', ', @emails )
+                    . "\r\nCC: "
+                    . 'Qlowd support <support@qlowd.io>'
+                    . "\r\nSubjet: Qlowd\r\n$message\r\n" );
+            $smtp->dataend();
+            $smtp->quit();
+        }
+        elsif ($do_update_quota) {
+            if ( $update->execute( $used, $used, $dir ) ) {
+                $nb_updated++;
+            }
+            else {
+                print "Failed to update customer '$dir' with used_space='$used' because $update->errstr\n";
+            }
+        }
     }
 }
 
