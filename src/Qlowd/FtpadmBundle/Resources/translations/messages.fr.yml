@@ -22,8 +22,7 @@ overview: Vue d'ensemble
 overview.quota: Quota
 overview.using_space: Vous utilisez
 
-user.login: Login
-user.mail: Email
+user.email: Email
 user.fullname: Nom complet
 user.password1: Mot de passe
 user.password2: Confirmer mot de passe

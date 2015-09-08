@@ -3,7 +3,6 @@ namespace Qlowd\FtpadmBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Qlowd\FtpadmBundle\Entity\User;
 use Qlowd\FtpadmBundle\Entity\Ftpuser;
@@ -16,14 +15,14 @@ class FtpController extends Controller {
 	public function listAction() {
 		$em = $this->getDoctrine()->getManager();
 		$user = $this->get('security.context')->getToken()->getUser();
-		$users = $em->getRepository('QlowdFtpadmBundle:User')->findByCustomer($user->getCustomer(), array('login' => 'ASC'));
+		$users = $em->getRepository('QlowdFtpadmBundle:User')->findByCustomer($user->getCustomer(), array('email' => 'ASC'));
 		$customer = $em->getRepository('QlowdFtpadmBundle:Customer')->findOneById($user->getCustomer());
-		$path_customer = $customer->getPath();
+		$path_customer = preg_replace("/^(.+?)\\/*$/", "$1", $customer->getPath());
 		$users_list = array();
 
 		foreach ($users as $u) {
 			$ftpuser = $em->getRepository('QlowdFtpadmBundle:Ftpuser')->findOneById($u->getId());
-			$path = substr($ftpuser->getHomedirectory(), strlen($path_customer)-1);
+			$path = substr($ftpuser->getHomedirectory(), strlen($path_customer));
 			$ftpuser->setHomedirectory($path);
 
 			if (isset($ftpuser))
@@ -34,23 +33,23 @@ class FtpController extends Controller {
 	}
 
 	/**
-	 * @Route("/ftp/add", defaults={"login" = null})
-	 * @Route("/ftp/edit/{login}")
+	 * @Route("/ftp/add", defaults={"email" = null})
+	 * @Route("/ftp/edit/{email}")
 	 */
-	public function editAction($login = null) {
+	public function editAction($email = null) {
 		$em = $this->getDoctrine()->getManager();
 
 		// edit user
-		if (isset($login)) {
-			$user = $em->getRepository('QlowdFtpadmBundle:User')->findOneByLogin($login);
+		if (isset($email)) {
+			$user = $em->getRepository('QlowdFtpadmBundle:User')->findOneByEmail($email);
 
 			if (!$user)
 				return $this->redirect('/ftp');
 
 			$ftpuser = $em->getRepository('QlowdFtpadmBundle:Ftpuser')->findOneById($user->getId());
 			$customer = $em->getRepository('QlowdFtpadmBundle:Customer')->findOneById($user->getCustomer());
-			$path_customer = $customer->getPath();
-			$path = substr($ftpuser->getHomedirectory(), strlen($path_customer)-1);
+			$path_customer = preg_replace("/^(.+?)\\/*$/", "$1", $customer->getPath());
+			$path = substr($ftpuser->getHomedirectory(), strlen($path_customer));
 			$ftpuser->setHomedirectory($path);
 		}
 		// add user
@@ -75,17 +74,24 @@ class FtpController extends Controller {
 	}
 
 	/**
-	* @Route("/ftp/del/{login}")
+	* @Route("/ftp/del/{email}")
 	*/
-	public function delAction($login = null) {
+	public function delAction($email = null) {
 		$em = $this->getDoctrine()->getManager();
-		$user = $em->getRepository('QlowdFtpadmBundle:User')->findOneByLogin($login);
 
-		if (!$user)
-			throw new NotFoundHttpException("User not found");
+		// delete user
+		if (isset($email)) {
+			$user = $em->getRepository('QlowdFtpadmBundle:User')->findOneByEmail($email);
 
-		$em->remove($user);
-		$em->flush();
+			if (!$user)
+				return $this->redirect('/ftp');
+
+			$ftpuser = $em->getRepository('QlowdFtpadmBundle:Ftpuser')->findOneById($user->getId());
+
+			$em->remove($user);
+			$em->remove($ftpuser);
+			$em->flush();
+		}
 
 		return new RedirectResponse($this->container->get('router')->generate('qlowd_ftpadm_ftp'));
 	}

@@ -20,12 +20,7 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * @var string
      */
-    private $login;
-
-    /**
-     * @var string
-     */
-    private $mail;
+    private $email;
 
     /**
      * @var string
@@ -57,6 +52,11 @@ class User implements AdvancedUserInterface, \Serializable
      */
     private $customer;
 
+    /**
+     * @var boolean
+     */
+    private $isAdmin;
+
 
     /**
      * Get id
@@ -69,49 +69,26 @@ class User implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * Set login
-     *
-     * @param string $login
-     * @return User
-     */
-    public function setLogin($login)
-    {
-        $this->login = $login;
-
-        return $this;
-    }
-
-    /**
-     * Get login
-     *
-     * @return string
-     */
-    public function getLogin()
-    {
-        return $this->login;
-    }
-
-    /**
-     * Set mail
+     * Set email
      *
      * @param string $mail
      * @return User
      */
-    public function setMail($mail)
+    public function setEmail($email)
     {
-        $this->mail = $mail;
+        $this->email = $email;
 
         return $this;
     }
 
     /**
-     * Get mail
+     * Get email
      *
      * @return string
      */
-    public function getMail()
+    public function getEmail()
     {
-        return $this->mail;
+        return $this->email;
     }
 
     /**
@@ -252,6 +229,30 @@ class User implements AdvancedUserInterface, \Serializable
         return $this->customer;
     }
 
+    /**
+     * Set isAdmin
+     *
+     * @param boolean $isAdmin
+     * @return User
+     */
+    public function setIsAdmin($isAdmin)
+    {
+        $this->isAdmin = $isAdmin;
+
+        return $this;
+    }
+
+    /**
+     * Get isAdmin
+     *
+     * @return boolean
+     */
+    public function getIsAdmin()
+    {
+        return $this->isAdmin;
+    }
+
+
     public function getRoles()
     {
       return array('ROLE_USER');
@@ -264,7 +265,7 @@ class User implements AdvancedUserInterface, \Serializable
 
     public function getUsername()
     {
-      return $this->login;
+      return $this->email;
 
     }
     public function eraseCredentials()
@@ -294,7 +295,7 @@ class User implements AdvancedUserInterface, \Serializable
     {
         return serialize(array(
             $this->id,
-            $this->login,
+            $this->email,
             $this->password,
             $this->isActive,
             // see section on salt below
@@ -307,41 +308,11 @@ class User implements AdvancedUserInterface, \Serializable
     {
         list (
             $this->id,
-            $this->login,
+            $this->email,
             $this->password,
             $this->isActive,
             // see section on salt below
             // $this->salt
         ) = unserialize($serialized);
-    }
-
-
-    /**
-     * @var boolean
-     */
-    private $isAdmin;
-
-
-    /**
-     * Set isAdmin
-     *
-     * @param boolean $isAdmin
-     * @return User
-     */
-    public function setIsAdmin($isAdmin)
-    {
-        $this->isAdmin = $isAdmin;
-
-        return $this;
-    }
-
-    /**
-     * Get isAdmin
-     *
-     * @return boolean 
-     */
-    public function getIsAdmin()
-    {
-        return $this->isAdmin;
     }
 }

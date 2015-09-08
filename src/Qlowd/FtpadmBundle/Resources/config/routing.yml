@@ -15,9 +15,9 @@ qlowd_ftpadm_ftp_add:
     defaults: { _controller: QlowdFtpadmBundle:Ftp:edit }
 
 qlowd_ftpadm_ftp_edit:
-    path:     /ftp/edit/{login}
-    defaults: { _controller: QlowdFtpadmBundle:Ftp:edit, login: null }
+    path:     /ftp/edit/{email}
+    defaults: { _controller: QlowdFtpadmBundle:Ftp:edit, email: null }
 
 qlowd_ftpadm_ftp_del:
-    path:     /ftp/del/{login}
-    defaults: { _controller: QlowdFtpadmBundle:Ftp:del, login: null }
+    path:     /ftp/del/{email}
+    defaults: { _controller: QlowdFtpadmBundle:Ftp:del, email: null }

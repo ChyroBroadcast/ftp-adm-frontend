@@ -16,13 +16,7 @@ Qlowd\FtpadmBundle\Entity\User:
             generator:
                 strategy: IDENTITY
     fields:
-        login:
-            type: string
-            nullable: false
-            length: 255
-            fixed: false
-            comment: ''
-        mail:
+        email:
             type: string
             nullable: false
             length: 255

@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-	{% if user.login == null %}
+	{% if user.email == null %}
 		{{ 'addUser'|trans }}
 	{% else %}
-		{{ 'editUser'|trans }}&nbsp;{{ user.login }}
+		{{ 'editUser'|trans }}&nbsp;{{ user.email }}
 	{% endif %}
 {% endblock %}
 
@@ -12,25 +12,19 @@
 {% block body %}
 <div class="page-header">
 	<h1>
-		{% if user.login == null %}
+		{% if user.email == null %}
 			{{ 'addUser'|trans }}
 		{% else %}
-			{{ 'editUser'|trans }}&nbsp;{{ user.login }}
+			{{ 'editUser'|trans }}&nbsp;{{ user.email }}
 		{% endif %}
 	</h1>
 </div>
 	<form class="form-horizontal" role="form" action="" method="post" enctype="multipart/form-data">
 
 		<div class="form-group">
-			<label class="control-label col-sm-2" for="login">{{ 'user.login'|trans }}{{ 'colon'|trans }}</label>
+			<label class="control-label col-sm-2" for="email">{{ 'user.email'|trans }}{{ 'colon'|trans }}</label>
 			<div class="col-sm-10">
-				<input class="form-control" type="text" id="login" name="login" placeholder="{{ 'user.login'|trans }}" value="{{ user.login }}" />
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="control-label col-sm-2" for="mail">{{ 'user.mail'|trans }}{{ 'colon'|trans }}</label>
-			<div class="col-sm-10">
-				<input class="form-control" type="email" id="mail" name="mail" placeholder="{{ 'user.mail'|trans }}" value="{{ user.mail }}" />
+				<input class="form-control" type="text" id="email" name="email" placeholder="{{ 'user.email'|trans }}" value="{{ user.email }}" />
 			</div>
 		</div>
 		<div class="form-group">
@@ -96,7 +90,7 @@
 
 		<div class="form-group">
 			<div class="col-sm-offset-5 col-sm-10">
-				<button class="btn btn-default" name="save" type="submit">{% if user.login == null %}{{ 'add'|trans }}{% else %}{{ 'edit'|trans }}{% endif %}</button>
+				<button class="btn btn-default" name="save" type="submit">{% if user.email == null %}{{ 'add'|trans }}{% else %}{{ 'edit'|trans }}{% endif %}</button>
 				<button class="btn btn-default" name="reset" type="reset">{{ 'reset'|trans }}</button>
 			</div>
 		</div>

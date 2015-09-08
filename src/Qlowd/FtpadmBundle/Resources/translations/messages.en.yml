@@ -22,8 +22,7 @@ overview: Overview
 overview.quota: Quota
 overview.using_space: You are using
 
-user.login: Login
-user.mail: Mail
+user.email: Email
 user.fullname: Full name
 user.password1: Password
 user.password2: Confirm password
