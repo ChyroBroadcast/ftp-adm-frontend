@@ -18,7 +18,7 @@ class Version20150907131309 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE User ADD email VARCHAR(255) NOT NULL, DROP login, DROP mail');
+        $this->addSql('ALTER TABLE User CHANGE mail email VARCHAR(255) NOT NULL, DROP login');
     }
 
     /**
@@ -29,6 +29,6 @@ class Version20150907131309 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE User ADD mail VARCHAR(255) NOT NULL, CHANGE email login VARCHAR(255) NOT NULL');
+        $this->addSql('ALTER TABLE User ADD login VARCHAR(255) NOT NULL, CHANGE email mail VARCHAR(255) NOT NULL');
     }
 }
