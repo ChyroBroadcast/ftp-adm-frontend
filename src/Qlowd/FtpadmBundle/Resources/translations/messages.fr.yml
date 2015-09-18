@@ -34,8 +34,10 @@ ftpuser.access: Droits FTP
 ftpuser.chroot: Chroot
 ftpuser.homedirectory: Répertoire personnel
 
-colon: &nbsp;:
-qmark: &nbsp;?
+colon: |4+
+     :
+qmark: |4+
+     ?
 
 add: Ajouter
 addUser: Ajouter un utilisateur

@@ -19,14 +19,107 @@
 		{% endif %}
 	</h1>
 </div>
-	<form class="form-horizontal" role="form" action="" method="post" enctype="multipart/form-data">
 
+
+<div>
+	<form class="form-horizontal" role="form" action="" method="post" {{ form_enctype(form) }}>
+		{{ form_errors(form) }}
+{{ form_widget(form._token) }}
+		<div class="form-group">
+			{{ form_label(form.email, 'user.email' | trans ~ 'colon' | trans, {'label_attr': {'class': 'control-label col-sm-2'}}) }}
+			{% if user.email == null %}
+				<div class="col-sm-10">
+					{{ form_widget(form.email, { 'attr': {'class': 'form-control'} }) }}
+				</div>
+			{% else %}
+				<div class="col-sm-10">
+					{{ form_widget(form.email, { 'attr': {'class': 'form-control', 'disabled': 'disabled'} }) }}
+				</div>
+			{% endif %}
+		</div>
+		<div class="form-group">
+			{{ form_label(form.fullname, 'user.fullname' | trans ~ 'colon' | trans, {'label_attr': {'class': 'control-label col-sm-2'}}) }}
+			<div class="col-sm-10">
+				{{ form_widget(form.fullname, { 'attr': {'class': 'form-control'} }) }}
+			</div>
+		</div>
+		<div class="form-group">
+			{{ form_label(form.password1, 'user.password1' | trans ~ 'colon' | trans, {'label_attr': {'class': 'control-label col-sm-2'}}) }}
+			<div class="col-sm-10">
+				{{ form_widget(form.password1, { 'attr': {'class': 'form-control'} }) }}
+			</div>
+		</div>
+		<div class="form-group">
+			{{ form_label(form.password2, 'user.password2' | trans ~ 'colon' | trans, {'label_attr': {'class': 'control-label col-sm-2'}}) }}
+			<div class="col-sm-10">
+				{{ form_widget(form.password2, { 'attr': {'class': 'form-control'} }) }}
+			</div>
+		</div>
+		<div class="form-group">
+			{{ form_label(form.phone, 'user.phone' | trans ~ 'colon' | trans, {'label_attr': {'class': 'control-label col-sm-2'}}) }}
+			<div class="col-sm-10">
+				{{ form_widget(form.phone, { 'attr': {'class': 'form-control'} }) }}
+			</div>
+		</div>
+		<div class="form-group">
+			{{ form_label(form.isActive, 'user.is_active' | trans ~ 'colon' | trans, {'label_attr': {'class': 'control-label col-sm-2'}}) }}
+			<div class="col-xs-1">
+				{{ form_widget(form.isActive, { 'attr': {'class': 'form-control'} }) }}
+			</div>
+		</div>
+		<div class="form-group">
+			{{ form_label(form.isAdmin, 'user.is_admin' | trans ~ 'colon' | trans, {'label_attr': {'class': 'control-label col-sm-2'}}) }}
+			<div class="col-xs-1">
+				{{ form_widget(form.isAdmin, { 'attr': {'class': 'form-control'} }) }}
+			</div>
+		</div>
+		<div class="form-group">
+			{{ form_label(form.read_access, 'read' | trans ~ 'colon' | trans, {'label_attr': {'class': 'control-label col-sm-2'}}) }}
+			<div class="col-xs-1">
+				{{ form_widget(form.read_access, { 'attr': {'class': 'form-control'} }) }}
+			</div>
+		</div>
+		<div class="form-group">
+			{{ form_label(form.write_access, 'write' | trans ~ 'colon' | trans, {'label_attr': {'class': 'control-label col-sm-2'}}) }}
+			<div class="col-xs-1">
+				{{ form_widget(form.write_access, { 'attr': {'class': 'form-control'} }) }}
+			</div>
+		</div>
+		<div class="form-group">
+			{{ form_label(form.chroot, 'ftpuser.chroot' | trans ~ 'colon' | trans, {'label_attr': {'class': 'control-label col-sm-2'}}) }}
+			<div class="col-xs-1">
+				{{ form_widget(form.chroot, { 'attr': {'class': 'form-control'} }) }}
+			</div>
+		</div>
+		<div class="form-group">
+			{{ form_label(form.homedirectory, 'ftpuser.homedirectory' | trans ~ 'colon' | trans, {'label_attr': {'class': 'control-label col-sm-2'}}) }}
+			<div class="col-sm-10">
+				{{ form_widget(form.homedirectory, { 'attr': {'class': 'form-control'} }) }}
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-offset-5 col-sm-10">
+				{% if user.email == null %}
+					{{ form_widget(form.save, { 'label': 'add'|trans }) }}
+				{% else %}
+					{{ form_widget(form.save, { 'label': 'edit'|trans }) }}
+				{% endif %}
+					{{ form_widget(form.reset, { 'label': 'reset'|trans }) }}
+			</div>
+		</div>
+	</form>
+</div>
+
+	<!-- <form class="form-horizontal" role="form" action="" method="post" enctype="multipart/form-data">
+
+	{% if user.email == null %}
 		<div class="form-group">
 			<label class="control-label col-sm-2" for="email">{{ 'user.email'|trans }}{{ 'colon'|trans }}</label>
 			<div class="col-sm-10">
 				<input class="form-control" type="text" id="email" name="email" placeholder="{{ 'user.email'|trans }}" value="{{ user.email }}" />
 			</div>
 		</div>
+	{% endif %}
 		<div class="form-group">
 			<label class="control-label col-sm-2" for="fullname">{{ 'user.fullname'|trans }}{{ 'colon'|trans }}</label>
 			<div class="col-sm-10">
@@ -95,6 +188,6 @@
 			</div>
 		</div>
 
-	</form>
+	</form> -->
 	<p><a href="{{ path('qlowd_ftpadm_ftp') }}">{{ 'rtul'|trans }}</a></p>
 {% endblock %}
