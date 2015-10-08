@@ -1,4 +1,0 @@
-<ul class="nav nav-sidebar">
-  <li "{% if app.request.get('_route') == 'app' %} class="active" {% endif %}"><a href="{{ path('app') }}">{{ 'overview'|trans }}<span class="sr-only">(current)</span></a></li>
-  <li "{% if app.request.get('_route') == 'qlowd_ftpadm_ftp' %} class="active" {% endif %}"><a href="{{ path('qlowd_ftpadm_ftp') }}">{{ 'ftp.account'|trans }}</a></li>
-</ul>
