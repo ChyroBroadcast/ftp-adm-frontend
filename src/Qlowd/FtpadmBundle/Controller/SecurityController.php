@@ -4,7 +4,7 @@ namespace Qlowd\FtpadmBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-//use Qlowd\FtpadmBundle\Entity as Security; // Activate to generate password
+use Qlowd\FtpadmBundle\Entity as Security; // Activate to generate password
 
 class SecurityController extends Controller
 {

@@ -20,49 +20,49 @@ class Ftpuser
    * @ORM\Id
    * @ORM\GeneratedValue(strategy="IDENTITY")
    */
-   private $id;
-   
+   protected $id;
+
     /**
      * @var integer
      *
      * @ORM\Column(name="uid", type="integer", nullable=false)
      */
-    private $uid;
+    protected $uid;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="gid", type="integer", nullable=false)
      */
-    private $gid;
+    protected $gid;
 
     /**
      * @var string
      *
      * @ORM\Column(name="shell", type="string", length=255, nullable=false)
      */
-    private $shell;
+    protected $shell;
 
     /**
      * @var string
      *
      * @ORM\Column(name="access", type="string", nullable=false)
      */
-    private $access;
+    protected $access;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="chroot", type="boolean", nullable=false)
      */
-    private $chroot;
+    protected $chroot;
 
     /**
      * @var string
      *
      * @ORM\Column(name="homedirectory", type="text", nullable=false)
      */
-    private $homedirectory;
+    protected $homedirectory;
 
     /**
      * Set uid
@@ -256,7 +256,7 @@ class Ftpuser
     /**
      * Get logcount
      *
-     * @return integer 
+     * @return integer
      */
     public function getLogcount()
     {
@@ -279,7 +279,7 @@ class Ftpuser
     /**
      * Get logindate
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getLogindate()
     {
@@ -302,7 +302,7 @@ class Ftpuser
     /**
      * Get modifdate
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getModifdate()
     {

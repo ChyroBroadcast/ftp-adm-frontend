@@ -4,7 +4,9 @@ namespace Qlowd\FtpadmBundle\Entity;
 
 
 use Doctrine\ORM\Mapping as ORM;
-//use Symfony\Component\Security\Core\User\UserInterface;
+
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
 /**
@@ -15,47 +17,49 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * @var integer
      */
-    private $id;
+    protected $id;
+
+    /**
+     * @var string
+     * @Assert\Email()
+     * @Assert\NotBlank()
+     */
+    protected $email;
 
     /**
      * @var string
      */
-    private $email;
+    protected $fullname;
 
     /**
      * @var string
      */
-    private $fullname;
-
-    /**
-     * @var string
-     */
-    private $password;
+    protected $password;
 
     /**
      * @var boolean
      */
-    private $access;
+    protected $access;
 
     /**
      * @var string
      */
-    private $phone;
+    protected $phone;
 
     /**
      * @var boolean
      */
-    private $isActive;
+    protected $isActive;
 
     /**
      * @var \Qlowd\FtpadmBundle\Entity\Customer
      */
-    private $customer;
+    protected $customer;
 
     /**
      * @var boolean
      */
-    private $isAdmin;
+    protected $isAdmin;
 
 
     /**

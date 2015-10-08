@@ -6,10 +6,15 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Type;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Qlowd\FtpadmBundle\Entity\User;
 use Qlowd\FtpadmBundle\Entity\Ftpuser;
 use Qlowd\FtpadmBundle\Entity\Customer;
+use Qlowd\FtpadmBundle\Form\Type\FtpAccountType;
+use Qlowd\FtpadmBundle\Form\Model\FtpAccount;
 
 class FtpController extends Controller {
 	/**
@@ -25,11 +30,15 @@ class FtpController extends Controller {
 
 		foreach ($users as $u) {
 			$ftpuser = $em->getRepository('QlowdFtpadmBundle:Ftpuser')->findOneById($u->getId());
-			$path = substr($ftpuser->getHomedirectory(), strlen($path_customer));
-			$ftpuser->setHomedirectory($path);
+			//$path = substr($ftpuser->getHomedirectory(), strlen($path_customer));
+			//$ftpuser->setHomedirectory($path);
+
 
 			if (isset($ftpuser))
 				$users_list[] = array('user' => $u, 'ftpuser' => $ftpuser);
+			//else {
+			//	$ftpuser->setHomedirectory('toto');
+			//}
 		}
 
 		return $this->render('QlowdFtpadmBundle:Ftp:list.html.twig', array('user' => $users_list));
@@ -45,23 +54,18 @@ class FtpController extends Controller {
 		$user = $this->get('security.context')->getToken()->getUser();
 		$customer = $em->getRepository('QlowdFtpadmBundle:Customer')->findOneById($user->getCustomer());
 		$path_customer = preg_replace('/^(.+?)\\/*$/', '$1', $customer->getPath());
+		$user = $em->getRepository('QlowdFtpadmBundle:User')->findOneByEmail($email);
 
 		// edit user
-		if (isset($email)) {
-			$user = $em->getRepository('QlowdFtpadmBundle:User')->findOneByEmail($email);
-
-			if (!$user)
-				return $this->redirect('/ftp');
-
+		if ($user) {
 			$ftpuser = $em->getRepository('QlowdFtpadmBundle:Ftpuser')->findOneById($user->getId());
 			$path = substr($ftpuser->getHomedirectory(), strlen($path_customer));
 			$ftpuser->setHomedirectory($path);
-		}
-
-		// add user
-		else {
+			$editUser = true;
+		} else {
 			$user = new User();
 			$ftpuser = new Ftpuser();
+			$editUser = false;
 		}
 
 		// Initialization of fields missing in the form
@@ -73,31 +77,32 @@ class FtpController extends Controller {
 		$ftpuser->setLogindate(date_create());
 		$ftpuser->setModifdate(date_create());
 
-		$data = array('user' => $user, 'ftpuser' => $ftpuser);
-		if ($ftpuser->getAccess() == 'read' or $ftpuser->getAccess() == 'read_write')
-			$read = true;
-		else
-			$read = false;
-		if ($ftpuser->getAccess() == 'write' or $ftpuser->getAccess() == 'read_write')
-			$write = true;
-		else
-			$write = false;
 
-		$form = $this->createFormBuilder($data)
-			->add('email', 'email', array('label' => 'user.email', 'data' => $user->getEmail()))
-			->add('fullname', 'text', array('label' => 'user.fullname', 'data' => $user->getFullname()))
-			->add('password1', 'password', array('label' => 'user.password1', 'required' => false))
-			->add('password2', 'password', array('label' => 'user.password2', 'required' => false))
-			->add('phone', 'text', array('label' => 'user.phone', 'data' => $user->getPhone()))
-			->add('isActive', 'checkbox', array('label' => 'user.is_active', 'required' => false, 'data' => $user->getIsActive()))
-			->add('isAdmin', 'checkbox', array('label' => 'user.is_admin', 'required' => false, 'data' => $user->getIsAdmin()))
-			->add('read_access', 'checkbox', array('label' => 'read', 'required' => false, 'data' => $read))
-			->add('write_access', 'checkbox', array('label' => 'write', 'required' => false, 'data' => $write))
-			->add('chroot', 'checkbox', array('label' => 'ftpuser.chroot', 'required' => false, 'data' => $ftpuser->getChroot()))
-			->add('homedirectory', 'text', array('label' => 'ftpuser.homedirectory', 'data' => $ftpuser->getHomedirectory()))
-			->add('save', 'submit')
-			->add('reset', 'reset')
-			->getForm();
+		$form = $this->createForm(new FtpAccountType());
+		if ($editUser) {
+			$popArray = array();
+			if ($ftpuser->getAccess() == 'read' or $ftpuser->getAccess() == 'read_write')
+				$read = true;
+			else
+				$read = false;
+			if ($ftpuser->getAccess() == 'write' or $ftpuser->getAccess() == 'read_write')
+				$write = true;
+			else
+				$write = false;
+
+
+			$popArray['email'] = $user->getEmail();
+			$popArray['fullname'] = $user->getFullname();
+			$popArray['phone'] = $user->getPhone();
+			$popArray['isActive'] = $user->getIsActive();
+			$popArray['isAdmin'] = $user->getIsAdmin();
+			$popArray['read_access'] = $read;
+			$popArray['write_access'] = $write;
+			$popArray['chroot'] = $ftpuser->getChroot();
+			$popArray['homedirectory'] = $ftpuser->getHomedirectory();
+
+			$form->setData($popArray);
+		}
 
 		if ($request->isMethod('POST')) {
 
@@ -106,19 +111,17 @@ class FtpController extends Controller {
 			if ($form->isSubmitted() && $form->isValid()) {
 				// email
 				$email = $form->get('email')->getData();
-				if (isset($email) && $email !== '' && $email !== $user->getEmail()) {
+				if (!$editUser)
 					$user->setEmail($email);
-				}
 
 				// fullname
 				$fullname = $form->get('fullname')->getData();
 				$user->setFullname($fullname);
 
 				// password
-				$password1 = $form->get('password1')->getData();
-				$password2 = $form->get('password2')->getData();
-				if ($password1 === $password2 && $password1 !== '')
-					$user->setPassword($password1);
+				$password = $form->get('password')->getData();
+				if ($password !== '')
+					$user->setPassword($password);
 
 				// phone
 				$phone = $form->get('phone')->getData();
@@ -156,10 +159,14 @@ class FtpController extends Controller {
 				$em->flush();
 
 				return $this->redirect($this->generateUrl('qlowd_ftpadm_ftp'));
-			}
+			} //else {
+				/*print_r($popArray).PHP_EOL;
+				print $email.PHP_EOL;
+				print 'blah'; die();*/
+			//}
 		}
 
-		return $this->container->get('templating')->renderResponse('QlowdFtpadmBundle:Ftp:add.html.twig', array('user' => $user, 'ftpuser' => $ftpuser, 'form' => $form->createView()));
+		return $this->container->get('templating')->renderResponse('QlowdFtpadmBundle:Ftp:add.html.twig', array('user' => $user, 'form' => $form->createView()));
 	}
 
 	/**
@@ -183,6 +190,11 @@ class FtpController extends Controller {
 		}
 
 		return new RedirectResponse($this->container->get('router')->generate('qlowd_ftpadm_ftp'));
+	}
+
+
+	public static function loadValidatorMetadata(ClassMetadata $metadata) {
+		$metadata->addPropertyConstraint('email', new NotBlank());
 	}
 }
 

@@ -102,12 +102,12 @@
 						</button>
 
 						{% if app.user.email != u.user.email %}
-							<button type="button" class="btn btn btn-danger btn-xs" aria-label="Delete" data-toggle="modal" data-target="#modalDel">
+							<button type="button" class="btn btn btn-danger btn-xs" aria-label="Delete" data-toggle="modal" data-target="#modalDel_{{u.user.id}}">
 								<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
 							</button>
 
 							<!-- Modal -->
-							<div class="modal fade" id="modalDel" role="dialog">
+							<div class="modal fade" id="modalDel_{{u.user.id}}" role="dialog">
 								<div class="modal-dialog modal-sm">
 									<div class="modal-content">
 										<div class="modal-header" style="text-align: center;">
