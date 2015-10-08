@@ -58,3 +58,11 @@ util.size.KB: KB
 util.size.MB: MB
 util.size.GB: GB
 util.size.TB: TB
+
+address.name: Name
+address.iban: IBAN
+address.address: Address
+address.zip_code: ZIP code
+address.city: City
+address.country: Country
+address.vat_number: VAT number

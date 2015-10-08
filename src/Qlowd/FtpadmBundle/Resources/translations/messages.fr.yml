@@ -60,3 +60,11 @@ util.size.KB: Ko
 util.size.MB: Mo
 util.size.GB: Go
 util.size.TB: To
+
+address.name: Nom
+address.iban: IBAN
+address.address: Adresse
+address.zip_code: Code postal
+address.city: Ville
+address.country: Pays
+address.vat_number: Numéro de TVA
