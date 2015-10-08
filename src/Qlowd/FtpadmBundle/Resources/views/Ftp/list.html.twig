@@ -61,7 +61,7 @@
 							</button>
 						{% elseif u.ftpuser.access == 'read' %}
 							<button disabled type="button" class="btn btn-success btn-xs" aria-label="ReadRights">
-								<span class="glyphicon glyphicon-remove" aria-hidden="true">&nbsp;{{ 'read'|trans }}</span>
+								<span class="glyphicon glyphicon-ok" aria-hidden="true">&nbsp;{{ 'read'|trans }}</span>
 							</button>
 							<button disabled type="button" class="btn btn-danger btn-xs" aria-label="NoWriteRights">
 								<span class="glyphicon glyphicon-remove" aria-hidden="true">&nbsp;{{ 'write'|trans }}</span>
@@ -71,14 +71,14 @@
 								<span class="glyphicon glyphicon-remove" aria-hidden="true">&nbsp;{{ 'read'|trans }}</span>
 							</button>
 							<button disabled type="button" class="btn btn-success btn-xs" aria-label="WriteRights">
-								<span class="glyphicon glyphicon-remove" aria-hidden="true">&nbsp;{{ 'write'|trans }}</span>
+								<span class="glyphicon glyphicon-ok" aria-hidden="true">&nbsp;{{ 'write'|trans }}</span>
 							</button>
 						{% else %}
 							<button disabled type="button" class="btn btn-success btn-xs" aria-label="ReadRights">
-								<span class="glyphicon glyphicon-remove" aria-hidden="true">&nbsp;{{ 'read'|trans }}</span>
+								<span class="glyphicon glyphicon-ok" aria-hidden="true">&nbsp;{{ 'read'|trans }}</span>
 							</button>
 							<button disabled type="button" class="btn btn-success btn-xs" aria-label="WriteRights">
-								<span class="glyphicon glyphicon-remove" aria-hidden="true">&nbsp;{{ 'write'|trans }}</span>
+								<span class="glyphicon glyphicon-ok" aria-hidden="true">&nbsp;{{ 'write'|trans }}</span>
 							</button>
 						{% endif %}
 					</td>
