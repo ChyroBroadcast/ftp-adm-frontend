@@ -1,31 +1,56 @@
-var app = angular.module('ftpAdmFrontend', ['ngAnimate', 'ngSanitize', 'mgcrea.ngStrap']);
+var app = angular.module('ftpAdmFrontend', ['ngAnimate', 'ngRoute', 'ngSanitize', 'mgcrea.ngStrap', 'ftpAdmFrontendDirv', 'ftpAdmFrontendService']);
 
-app.controller('LanguageController', [ '$scope',
-	function($scope) {
+app.config(['$routeProvider', function($routeProvider) {
+	$routeProvider.when('/', {
+		templateUrl: 'view/overview.html'
+	});
+	$routeProvider.otherwise({
+		redirectTo: '/'
+	});
+}]);
+
+app.controller('LanguageController', [ '$scope', '$locale',
+	function($scope, $locale) {
 		$scope.languagesList = [{
 			text: "<span class=\"flag-icon flag-icon-gb\"></span> English",
-			href: "#/en"
+			click: setLanguage('en')
 		}, {
 			divider: true
 		}, {
 			text: "<span class=\"flag-icon flag-icon-fr\"></span> Français",
-			href: "#/fr"
+			click: setLanguage('fr')
 		}];
 
+		function setLanguage(lang) {
+			return function setLanguageInner() {
+				$locale.set_lang(lang);
+			}
+		}
 	}
 ]);
 
-app.controller('AccountMenuController', [ '$scope',
-	function($scope) {
+app.controller('AccountMenuController', [ '$scope', '$locale',
+	function($scope, $locale) {
 		$scope.accountMenu = [{
+			fafTr: "navbar.account",
 			text: "Account",
 			href: "#/account"
 		}, {
 			divider: true
 		}, {
+			fafTr: "navbar.logout",
 			text: "Logout",
 			href: "#/logout"
 		}];
+
+		$scope.$on('$localeChanged', function() {
+			for (var i = 0, n = $scope.accountMenu.length; i < n; i++) {
+				if (!('fafTr' in $scope.accountMenu[i]))
+					continue;
+
+				$scope.accountMenu[i].text = $locale.translate($scope.accountMenu[i].fafTr);
+			}
+		});
 	}
 ]);
 
