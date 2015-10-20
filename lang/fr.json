@@ -9,5 +9,8 @@
 	"navbar.account": "Compte",
 	"navbar.home": "Accueil",
 	"navbar.language": "Langue",
-	"navbar.logout": "Déconnexion"
+	"navbar.logout": "Déconnexion",
+
+	"sidebar.ftp_accounts": "Comptes FTP",
+	"sidebar.overview": "Vue d'ensemble"
 }

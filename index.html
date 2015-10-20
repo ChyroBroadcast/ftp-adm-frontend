@@ -49,7 +49,7 @@
 							</a>
 						</li>
 						<li class="dropdown" bs-dropdown="accountMenu" ng-controller="AccountMenuController" data-container="body" data-html="yes" data-placement="bottom-right" ng-hide="!connected">
-							<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Qlowd
+							<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ user.fullname }}
 								<span class="caret" />
 							</a>
 						</li>
@@ -63,10 +63,10 @@
 				<div class="col-sm-3 col-md-2 sidebar" ng-hide="!connected">
 					<ul class="nav nav-sidebar" role="navigation" bs-navbar>
 						<li data-match-route="/$">
-							<a href="#/">Overview</a>
+							<a href="#/" faf-tr="sidebar.overview">Overview</a>
 						</li>
 						<li data-match-route="/ftp">
-							<a href="#/ftp">FTP Accounts</a>
+							<a href="#/ftp" faf-tr="sidebar.ftp_accounts">FTP Accounts</a>
 						</li>
 					</ul>
 				</div>

@@ -51,7 +51,9 @@ app.controller('LoginController', ['$scope', '$http', '$alert', '$locale', '$loc
 app.controller('MainController', ['$scope', '$http', '$location',
 	function($scope, $http, $location) {
 		$scope.connected = false;
-		$scope.user = {};
+		$scope.user = {
+			fullname: ''
+		};
 
 		$http({
 			method: 'GET',
@@ -81,7 +83,9 @@ app.controller('MainController', ['$scope', '$http', '$location',
 				withCredentials: true
 			}).success(function(data, status, headers, config) {
 				$scope.connected = false;
-				$scope.user = {};
+				$scope.user = {
+					fullname: ''
+				};
 				$location.path('/login');
 			}).error(function(data, status, headers, config) {
 				debugger;
@@ -113,7 +117,9 @@ app.controller('MainController', ['$scope', '$http', '$location',
 					callback();
 			}).error(function(data, status, headers, config) {
 				$scope.connected = false;
-				$scope.user = {};
+				$scope.user = {
+					fullname: ''
+				};
 				if ($location.path() != '/login')
 					$location.path('/login');
 			});
