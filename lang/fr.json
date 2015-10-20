@@ -1,4 +1,11 @@
 {
+	"login.authentification.failed": "Identifiant invalide.",
+	"login.authentification.success": "Acèss autorisé",
+	"login.email": "Courriel",
+	"login.login": "Connexion",
+	"login.password": "Mot de passe",
+	"login.submit": "Connexion",
+
 	"navbar.account": "Compte",
 	"navbar.home": "Accueil",
 	"navbar.language": "Langue",

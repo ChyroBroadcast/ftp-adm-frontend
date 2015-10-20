@@ -1,4 +1,11 @@
 {
+	"login.authentification.failed": "Invalid credentials.",
+	"login.authentification.success": "Acess granted",
+	"login.email": "Email",
+	"login.login": "Login",
+	"login.password": "password",
+	"login.submit": "Login",
+
 	"navbar.account": "Account",
 	"navbar.home": "Home",
 	"navbar.language": "Language",

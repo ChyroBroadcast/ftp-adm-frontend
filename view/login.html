@@ -1,0 +1,11 @@
+<div class="container" ng-controller="LoginController">
+	<form class="form-signin" novalidate>
+		<h2 class="form-signin-heading" faf-tr="login.login"></h2>
+		<div id="display-alert"></div>
+		<label for="username" class="sr-only" faf-tr="login.username"></label>
+		<input class="form-control" type="email" id="username" placeholder faf-tr="login.email" ng-model="login" autofocus required />
+		<label for="password" class="sr-only" faf-tr="login.password"></label>
+		<input class="form-control" type="password" id="password" placeholder faf-tr="login.password" ng-model="password" required />
+		<button type="submit" class="btn btn-lg btn-primary btn-block" ng-click="submit()" faf-tr="login.submit"></button>
+	</form>
+</div>

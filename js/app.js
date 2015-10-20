@@ -4,10 +4,122 @@ app.config(['$routeProvider', function($routeProvider) {
 	$routeProvider.when('/', {
 		templateUrl: 'view/overview.html'
 	});
+	$routeProvider.when('/login', {
+		templateUrl: 'view/login.html'
+	});
 	$routeProvider.otherwise({
 		redirectTo: '/'
 	});
 }]);
+
+app.controller('LoginController', ['$scope', '$http', '$alert', '$locale', '$location',
+	function($scope, $http, $alert, $locale, $location) {
+		$scope.login = '';
+		$scope.password = '';
+
+		$scope.submit = function() {
+			if ($scope.password && $scope.password.length == 0)
+				return;
+
+			$http({
+				method: 'POST',
+				url: '/ftp-adm-api/api/v1/auth/',
+				data: {
+					'login': $scope.login,
+					'password': $scope.password
+				},
+				cache: false,
+				responseType: "json",
+				withCredentials: true
+			}).success(function(data, status, headers, config) {
+				$scope.loadUserInfo(function() {
+					$location.path('/');
+				});
+			}).error(function(data, status, headers, config) {
+				$alert({
+					content: '<span faf-tr="login.authentification.failed">' + $locale.translate('login.authentification.failed') + '</span>',
+					container: '#display-alert',
+					type: 'info',
+					html: true,
+					show: true
+				});
+			});
+		}
+	}
+]);
+
+app.controller('MainController', ['$scope', '$http', '$location',
+	function($scope, $http, $location) {
+		$scope.connected = false;
+		$scope.user = {};
+
+		$http({
+			method: 'GET',
+			url: '/ftp-adm-api/api/v1/auth/',
+			cache: false,
+			responseType: "json",
+			withCredentials: true
+		}).success(function(data, status, headers, config) {
+			$scope.loadUserInfo(function() {
+				$scope.connected = true;
+				if ($location.path() == '/login')
+					$location.path('/');
+			});
+		}).error(function(data, status, headers, config) {
+			$scope.connected = false;
+			if ($location.path() != '/login')
+				$location.path('/login');
+		});
+
+		$scope.disconnect = function() {
+			debugger;
+			$http({
+				method: 'DELETE',
+				url: '/ftp-adm-api/api/v1/auth/',
+				cache: false,
+				responseType: "json",
+				withCredentials: true
+			}).success(function(data, status, headers, config) {
+				$scope.connected = false;
+				$scope.user = {};
+				$location.path('/login');
+			}).error(function(data, status, headers, config) {
+				debugger;
+			});
+		}
+
+		$scope.$on('$routeChangeStart', function(event, next, current) {
+			if ($scope.connected) {
+				if ($location.path() == '/login')
+					$location.path('/');
+			} else {
+				if ($location.path() != '/login')
+					$location.path('/login');
+			}
+		});
+
+		$scope.loadUserInfo = function(callback) {
+			$http({
+				method: 'GET',
+				url: '/ftp-adm-api/api/v1/user/',
+				cache: false,
+				responseType: "json",
+				withCredentials: true
+			}).success(function(data, status, headers, config) {
+				$scope.connected = true;
+				$scope.user = data.user;
+
+				if (callback)
+					callback();
+			}).error(function(data, status, headers, config) {
+				$scope.connected = false;
+				$scope.user = {};
+				if ($location.path() != '/login')
+					$location.path('/login');
+			});
+		}
+	}
+]);
 
 app.controller('LanguageController', [ '$scope', '$locale',
 	function($scope, $locale) {
@@ -40,7 +152,9 @@ app.controller('AccountMenuController', [ '$scope', '$locale',
 		}, {
 			fafTr: "navbar.logout",
 			text: "Logout",
-			href: "#/logout"
+			click: function() {
+				$scope.disconnect();
+			}
 		}];
 
 		$scope.$on('$localeChanged', function() {

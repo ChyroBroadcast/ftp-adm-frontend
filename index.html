@@ -11,6 +11,7 @@
 
 		<script src="js/angular.min.js"></script>
 		<script src="js/angular-animate.min.js"></script>
+		<script src="js/angular-cookie.min.js"></script>
 		<script src="js/angular-route.min.js"></script>
 		<script src="js/angular-sanitize.min.js"></script>
 		<script src="js/angular-strap.min.js"></script>
@@ -21,7 +22,7 @@
 		<script src="js/controller.js"></script>
 		<script src="js/app.js"></script>
 	</head>
-	<body>
+	<body ng-controller="MainController">
 		<!-- Fixed navbar -->
 		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" bs-navbar>
 			<div class="container">
@@ -35,7 +36,7 @@
 					<a class="navbar-brand" href="#/">QLOWD</a>
 				</div>
 				<div class="collapse navbar-collapse">
-					<ul class="nav navbar-nav">
+					<ul class="nav navbar-nav" ng-hide="!connected">
 						<li data-match-route="/$">
 							<a href="#/" faf-tr="navbar.home">Home</a>
 						</li>
@@ -47,7 +48,7 @@
 								<span class="caret" />
 							</a>
 						</li>
-						<li class="dropdown" bs-dropdown="accountMenu" ng-controller="AccountMenuController" data-container="body" data-html="yes" data-placement="bottom-right">
+						<li class="dropdown" bs-dropdown="accountMenu" ng-controller="AccountMenuController" data-container="body" data-html="yes" data-placement="bottom-right" ng-hide="!connected">
 							<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Qlowd
 								<span class="caret" />
 							</a>
@@ -59,7 +60,7 @@
 
 		<div class="container-fluid" id="main_page">
 			<div class="row">
-				<div class="col-sm-3 col-md-2 sidebar">
+				<div class="col-sm-3 col-md-2 sidebar" ng-hide="!connected">
 					<ul class="nav nav-sidebar" role="navigation" bs-navbar>
 						<li data-match-route="/$">
 							<a href="#/">Overview</a>
