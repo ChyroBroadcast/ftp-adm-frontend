@@ -3,7 +3,7 @@ var FTPAdmSrv = angular.module('ftpAdmFrontendService', []);
 FTPAdmSrv.config(['$provide', function($provide) {
 	$provide.decorator('$locale', ['$window', '$delegate', '$rootScope', '$http', function($window, $delegate, $root, $http) {
 		var available_lang = ['en', 'fr'];
-		var lang = $window.navigator.language in available_lang ? $window.navigator.language : 'en';
+		var lang = available_lang.indexOf($window.navigator.language) > -1 ? $window.navigator.language : 'en';
 		var datas = {};
 
 		function download() {
