@@ -23,7 +23,7 @@ app.controller('LoginController', ['$scope', '$http', '$alert', '$locale', '$loc
 
 			$http({
 				method: 'POST',
-				url: '/ftp-adm-api/api/v1/auth/',
+				url: $scope.config.api.base_url + '/api/v1/auth/',
 				data: {
 					'login': $scope.login,
 					'password': $scope.password
@@ -57,27 +57,36 @@ app.controller('MainController', ['$scope', '$http', '$location',
 
 		$http({
 			method: 'GET',
-			url: '/ftp-adm-api/api/v1/auth/',
-			cache: false,
+			url: 'config.json',
+			cache: true,
 			responseType: "json",
-			withCredentials: true
 		}).success(function(data, status, headers, config) {
-			$scope.loadUserInfo(function() {
-				$scope.connected = true;
-				if ($location.path() == '/login')
-					$location.path('/');
+			$scope.config = data;
+
+			$http({
+				method: 'GET',
+				url: $scope.config.api.base_url + '/api/v1/auth/',
+				cache: false,
+				responseType: "json",
+				withCredentials: true
+			}).success(function(data, status, headers, config) {
+				$scope.loadUserInfo(function() {
+					$scope.connected = true;
+					if ($location.path() == '/login')
+						$location.path('/');
+				});
+			}).error(function(data, status, headers, config) {
+				$scope.connected = false;
+				if ($location.path() != '/login')
+					$location.path('/login');
 			});
 		}).error(function(data, status, headers, config) {
-			$scope.connected = false;
-			if ($location.path() != '/login')
-				$location.path('/login');
 		});
 
 		$scope.disconnect = function() {
-			debugger;
 			$http({
 				method: 'DELETE',
-				url: '/ftp-adm-api/api/v1/auth/',
+				url: $scope.config.api.base_url + '/api/v1/auth/',
 				cache: false,
 				responseType: "json",
 				withCredentials: true
@@ -105,7 +114,7 @@ app.controller('MainController', ['$scope', '$http', '$location',
 		$scope.loadUserInfo = function(callback) {
 			$http({
 				method: 'GET',
-				url: '/ftp-adm-api/api/v1/user/',
+				url: $scope.config.api.base_url + '/api/v1/user/',
 				cache: false,
 				responseType: "json",
 				withCredentials: true
