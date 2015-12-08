@@ -11,6 +11,8 @@
 	"navbar.language": "Language",
 	"navbar.logout": "Log out",
 
+	"overview.usage": "Using space:",
+
 	"sidebar.ftp_accounts": "FTP Accounts",
 	"sidebar.overview": "overview"
 }

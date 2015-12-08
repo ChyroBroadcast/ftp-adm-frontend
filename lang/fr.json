@@ -11,6 +11,8 @@
 	"navbar.language": "Langue",
 	"navbar.logout": "Déconnexion",
 
+	"overview.usage": "Espace utilisé :",
+
 	"sidebar.ftp_accounts": "Comptes FTP",
 	"sidebar.overview": "Vue d'ensemble"
 }

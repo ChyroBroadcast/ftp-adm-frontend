@@ -4,10 +4,10 @@
 
 <h2>Quota:</h2>
 <div class="progress" style="height: 48px;">
-	<div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 10%;"></div>
+	<div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{ usage }}%;"></div>
 </div>
 
 <span style="font-size: 2em">
-	Using space: 10%
+	<span faf-tr="overview.usage"></span> {{ usage  | number : fractionSize }} %
 </span>
 

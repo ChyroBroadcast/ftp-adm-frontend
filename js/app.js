@@ -121,7 +121,7 @@ app.controller('MainController', ['$scope', '$http', '$location',
 			}).success(function(data, status, headers, config) {
 				$scope.connected = true;
 				$scope.user = data.user;
-
+				$scope.usage = (data.user.used_space / data.user.total_space) * 100.0;
 				if (callback)
 					callback();
 			}).error(function(data, status, headers, config) {
