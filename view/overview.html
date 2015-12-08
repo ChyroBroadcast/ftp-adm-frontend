@@ -2,12 +2,15 @@
 	<h1>Welcome</h1>
 </div>
 
+
 <h2>Quota:</h2>
 <div class="progress" style="height: 48px;">
 	<div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{ usage }}%;"></div>
 </div>
 
 <span style="font-size: 2em">
+	<span faf-size="{{ user.used_space }}"></span> / <span faf-size="{{ user.total_space }}"></span>
+	<br />
 	<span faf-tr="overview.usage"></span> {{ usage  | number : fractionSize }} %
 </span>
 

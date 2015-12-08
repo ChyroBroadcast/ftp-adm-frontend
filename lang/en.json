@@ -14,5 +14,12 @@
 	"overview.usage": "Using space:",
 
 	"sidebar.ftp_accounts": "FTP Accounts",
-	"sidebar.overview": "overview"
+	"sidebar.overview": "overview",
+	
+	"unit.B": "B",
+	"unit.kiB": "kiB",
+	"unit.MiB": "MiB",
+	"unit.GiB": "GiB",
+	"unit.TiB": "TiB",
+	"unit.PiB": "PiB"
 }

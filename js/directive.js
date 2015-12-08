@@ -44,3 +44,60 @@ FTPAdmDirv.directive('fafTr', [ '$locale', function($tr) {
                 },
         };
 }]);
+
+FTPAdmDirv.directive('fafSize', [ '$locale', function($tr) {
+	return {
+		restrict: 'A',
+		link: function(scope, element, attrs) {
+			function convertSize(size) {
+				var mult = 0;
+				var type;
+				while (size >= 1024 && mult < 5) {
+					mult++;
+					size /= 1024;
+				}
+
+				var width = 0;
+				if (size < 10)
+					width = 2;
+				else if (size < 100)
+					width = 1;
+
+				switch (mult) {
+					case 0:
+						type = $tr.translate('unit.B');
+						break;
+					case 1:
+						type = $tr.translate('unit.kiB');
+						break;
+					case 2:
+						type = $tr.translate('unit.MiB');
+						break;
+					case 3:
+						type = $tr.translate('unit.GiB');
+						break;
+					case 4:
+						type = $tr.translate('unit.TiB');
+						break;
+					default:
+						type = $tr.translate('unit.PiB');
+						break;
+				}
+
+				element.html(size.toFixed(width) + type);
+			}
+
+                        scope.$on('$localeChanged', function() {
+				convertSize(attrs.fafSize);
+                        });
+
+                        attrs.$observe('fafSize', function(value) {
+				convertSize(value);
+                        });
+
+                        if (attrs.fafSize)
+				convertSize(attrs.fafSize);
+		},
+	};
+}]);
+

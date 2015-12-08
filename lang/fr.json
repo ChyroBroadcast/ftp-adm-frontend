@@ -14,5 +14,12 @@
 	"overview.usage": "Espace utilisé :",
 
 	"sidebar.ftp_accounts": "Comptes FTP",
-	"sidebar.overview": "Vue d'ensemble"
+	"sidebar.overview": "Vue d'ensemble",
+
+	"unit.B": " o",
+	"unit.kiB": " kio",
+	"unit.MiB": " Mio",
+	"unit.GiB": " Gio",
+	"unit.TiB": " Tio",
+	"unit.PiB": " Pio"
 }
