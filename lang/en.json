@@ -1,4 +1,18 @@
 {
+    "cust.settings": "Account settings",
+    "cust.personal_settings": "Personal Settings",
+    "cust.addresses_settings": "Addresses Settings",
+    "cust.name": "Name",
+    "cust.total_space": "Total space",
+    "cust.addr.iban": "IBAN",
+    "cust.addr.vat": "VAT number",
+    "cust.addr.street": "Street",
+    "cust.addr.zip": "ZIP code",
+    "cust.addr.city": "City",
+    "cust.addr.country": "Country",
+    "cust.addr.phone": "Phone number",
+    "cust.addr.title": "Title",
+    
 	"login.authentification.failed": "Invalid credentials.",
 	"login.authentification.success": "Acess granted",
 	"login.email": "Email",
@@ -14,7 +28,7 @@
 	"overview.usage": "Using space:",
 
 	"sidebar.ftp_accounts": "FTP Accounts",
-	"sidebar.overview": "overview",
+	"sidebar.overview": "Overview",
 	
 	"unit.B": "B",
 	"unit.kiB": "kB",

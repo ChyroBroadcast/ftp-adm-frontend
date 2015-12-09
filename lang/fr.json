@@ -1,4 +1,18 @@
 {
+    "cust.settings": "Options du compte",
+    "cust.personal_settings": "Informations personnelles",
+    "cust.addresses_settings": "Adresses",
+    "cust.name": "Nom",
+    "cust.total_space": "Espace total",
+    "cust.addr.iban": "IBAN",
+    "cust.addr.vat": "Numéro de TVA intracommunautaire",
+    "cust.addr.street": "Rue",
+    "cust.addr.zip": "Code postal",
+    "cust.addr.city": "Ville",
+    "cust.addr.country": "Pays",
+    "cust.addr.phone": "Numéro de téléphone",
+    "cust.addr.title": "Nom",
+    
 	"login.authentification.failed": "Identifiant invalide.",
 	"login.authentification.success": "Acèss autorisé",
 	"login.email": "Courriel",
