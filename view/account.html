@@ -8,12 +8,11 @@
   			<div class="input-group-addon">Full Name</div>
   			<input ng-model="customer.name" type="text" class="form-control" id="iban_input" placeholder="IBAN">
   		</div><br /><br />
-  	<div class="input-group">
+  	  <div class="input-group">
   			<div class="input-group-addon">Total space (in B)</div>
   			<input ng-model="customer.total_space" type="text" class="form-control" id="vat_input" placeholder="VAT">
   		</div>
-  	</div><br /><br />
-  	<button type="submit" class="btn btn-primary" ng-click="submit()">Update</button>
+  	</div>
   </form>
 
 
@@ -26,16 +25,43 @@
   		<label class="sr-only" for="exampleInputAmount">IBAN</label>
   		<div class="input-group">
   			<div class="input-group-addon">IBAN</div>
-  			<input ng-model="addr.iban" type="text" class="form-control" id="iban_input" placeholder="IBAN" value="{{ addr.iban }}">
+  			<input ng-model="addr.iban" type="text" class="form-control" id="iban_input" placeholder="IBAN">
   		</div><br /><br />
   	<div class="input-group">
   			<div class="input-group-addon">VAT</div>
-  			<input ng-model="addr.vat_number" type="text" class="form-control" id="vat_input" placeholder="VAT" value="{{ addr.vat_number }}">
-  		</div>
+  			<input ng-model="addr.vat_number" type="text" class="form-control" id="vat_input" placeholder="VAT">
+  		</div><br /><br />
+		<div class="input-group">
+			<div class="input-group-addon">Street</div>
+			<input ng-model="addr.street" type="text" class="form-control" id="iban_input" placeholder="Street">
+		</div>
+		<div class="input-group">
+			<div class="input-group-addon">ZIP Code</div>
+			<input ng-model="addr.zip_code" type="text" class="form-control" id="iban_input" placeholder="ZIP">
+		</div><br /><br />
+		<div class="input-group">
+			<div class="input-group-addon">City</div>
+			<input ng-model="addr.city" type="text" class="form-control" id="iban_input" placeholder="City">
+		</div>
+		<div class="input-group">
+			<div class="input-group-addon">Country</div>
+			<input ng-model="addr.country" type="text" class="form-control" id="iban_input" placeholder="Country">
+		</div><br /><br />
+		<div class="input-group">
+			<div class="input-group-addon">Phone number</div>
+			<input ng-model="addr.phone" type="text" class="form-control" id="iban_input" placeholder="Phone">
+		</div>
+		<div class="input-group">
+			<div class="input-group-addon">Title</div>
+			<input ng-model="addr.title" type="text" class="form-control" id="iban_input" placeholder="Title">
+		</div>
   	</div><br /><br />
-  	<button type="submit" class="btn btn-primary" ng-click="submit()">Update</button>
+
   </form>
 </div>
 
-<button type="submit" class="btn btn-primary" ng-click="customer.address.push({})">New address</button>
+  	<button type="submit" class="btn btn-primary" ng-click="submit()">Update</button>
+<button type="submit" class="btn btn-primary" ng-click="customer.address.push({'customer':customer.address[0].customer})">New address</button>
 
+
+{{ customer | json }}
