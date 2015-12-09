@@ -95,6 +95,11 @@ app.controller('MainController', ['$scope', '$http', '$location',
 				$scope.user = {
 					fullname: ''
 				};
+
+				if (interval !== null)
+					clearInterval(interval);
+				interval = null;
+
 				$location.path('/login');
 			}).error(function(data, status, headers, config) {
 				debugger;
@@ -111,6 +116,7 @@ app.controller('MainController', ['$scope', '$http', '$location',
 			}
 		});
 
+		var interval = null;
 		$scope.loadUserInfo = function(callback) {
 			$http({
 				method: 'GET',
@@ -121,7 +127,26 @@ app.controller('MainController', ['$scope', '$http', '$location',
 			}).success(function(data, status, headers, config) {
 				$scope.connected = true;
 				$scope.user = data.user;
-				$scope.usage = (data.user.used_space / data.user.total_space) * 100.0;
+
+				$scope.usage_color = 'progress-bar-success';
+				$scope.usage_pct = (data.user.used_space / data.user.total_space) * 100.0;
+				$scope.usage_width = $scope.usage_pct;
+
+				if ($scope.usage_pct > 80)
+					$scope.usage_color = 'progress-bar-warning';
+
+				if ($scope.usage_pct > 95)
+					$scope.usage_color = 'progress-bar-danger';
+
+				if ($scope.usage_pct > 100)
+					$scope.usage_width = 10000 / $scope.usage_pct;
+
+				if (interval === null) {
+					interval = setInterval(function fetch() {
+						$scope.loadUserInfo();
+					}, 20000);
+				}	
+
 				if (callback)
 					callback();
 			}).error(function(data, status, headers, config) {
@@ -129,6 +154,11 @@ app.controller('MainController', ['$scope', '$http', '$location',
 				$scope.user = {
 					fullname: ''
 				};
+				
+				if (interval !== null)
+					clearInterval(interval);
+				interval = null;
+
 				if ($location.path() != '/login')
 					$location.path('/login');
 			});

@@ -17,9 +17,9 @@
 	"sidebar.overview": "Vue d'ensemble",
 
 	"unit.B": " o",
-	"unit.kiB": " kio",
-	"unit.MiB": " Mio",
-	"unit.GiB": " Gio",
-	"unit.TiB": " Tio",
-	"unit.PiB": " Pio"
+	"unit.kiB": " ko",
+	"unit.MiB": " Mo",
+	"unit.GiB": " Go",
+	"unit.TiB": " To",
+	"unit.PiB": " Po"
 }

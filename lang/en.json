@@ -17,9 +17,9 @@
 	"sidebar.overview": "overview",
 	
 	"unit.B": "B",
-	"unit.kiB": "kiB",
-	"unit.MiB": "MiB",
-	"unit.GiB": "GiB",
-	"unit.TiB": "TiB",
-	"unit.PiB": "PiB"
+	"unit.kiB": "kB",
+	"unit.MiB": "MB",
+	"unit.GiB": "GB",
+	"unit.TiB": "TB",
+	"unit.PiB": "PB"
 }

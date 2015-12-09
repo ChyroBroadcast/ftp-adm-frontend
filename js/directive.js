@@ -52,9 +52,9 @@ FTPAdmDirv.directive('fafSize', [ '$locale', function($tr) {
 			function convertSize(size) {
 				var mult = 0;
 				var type;
-				while (size >= 1024 && mult < 5) {
+				while (size >= 1000 && mult < 5) {
 					mult++;
-					size /= 1024;
+					size /= 1000;
 				}
 
 				var width = 0;
