@@ -7,6 +7,10 @@ app.config(['$routeProvider', function($routeProvider) {
 	$routeProvider.when('/login', {
 		templateUrl: 'view/login.html'
 	});
+	$routeProvider.when('/account', {
+		templateUrl: 'view/account.html',
+        controller: 'AccountController'
+	});
 	$routeProvider.otherwise({
 		redirectTo: '/'
 	});
@@ -164,6 +168,21 @@ app.controller('MainController', ['$scope', '$http', '$location',
 			});
 		}
 	}
+]);
+
+app.controller('AccountController', ['$scope', '$http', '$locale', '$location',
+    function($scope, $http, $locale, $location) {
+        $http({
+            method: 'GET',
+            url: '/api/v1/customer/',
+            responseType: 'json',
+            withCredentials: true
+        }).then(function success(response) {
+            $scope.customer = response.data;
+        }, function error(response) {
+            console.log(response.status);
+        });
+    }
 ]);
 
 app.controller('LanguageController', [ '$scope', '$locale',
