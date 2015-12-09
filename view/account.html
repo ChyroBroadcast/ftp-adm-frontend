@@ -1,5 +1,22 @@
 <h1>Account settings</h1>
 
+<h2>Personal Informations</h2>
+  <form class="form-inline">
+  	<div class="form-group">
+  		<label class="sr-only" for="exampleInputAmount">IBAN</label>
+  		<div class="input-group">
+  			<div class="input-group-addon">Full Name</div>
+  			<input ng-model="customer.name" type="text" class="form-control" id="iban_input" placeholder="IBAN">
+  		</div><br /><br />
+  	<div class="input-group">
+  			<div class="input-group-addon">Total space (in B)</div>
+  			<input ng-model="customer.total_space" type="text" class="form-control" id="vat_input" placeholder="VAT">
+  		</div>
+  	</div><br /><br />
+  	<button type="submit" class="btn btn-primary" ng-click="submit()">Update</button>
+  </form>
+
+
 <h2>Addresses</h2>
 
 <div ng-repeat="addr in customer.address">
@@ -9,16 +26,16 @@
   		<label class="sr-only" for="exampleInputAmount">IBAN</label>
   		<div class="input-group">
   			<div class="input-group-addon">IBAN</div>
-  			<input type="text" class="form-control" id="iban_input" placeholder="IBAN" value="{{ addr.iban }}">
+  			<input ng-model="addr.iban" type="text" class="form-control" id="iban_input" placeholder="IBAN" value="{{ addr.iban }}">
   		</div><br /><br />
   	<div class="input-group">
   			<div class="input-group-addon">VAT</div>
-  			<input type="text" class="form-control" id="vat_input" placeholder="VAT" value="{{ addr.vat_number }}">
+  			<input ng-model="addr.vat_number" type="text" class="form-control" id="vat_input" placeholder="VAT" value="{{ addr.vat_number }}">
   		</div>
   	</div><br /><br />
-  	<button type="submit" class="btn btn-primary">Update</button>
+  	<button type="submit" class="btn btn-primary" ng-click="submit()">Update</button>
   </form>
 </div>
 
+<button type="submit" class="btn btn-primary" ng-click="customer.address.push({})">New address</button>
 
-<h2>Users</h2>

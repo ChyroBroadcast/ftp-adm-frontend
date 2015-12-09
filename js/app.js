@@ -182,7 +182,21 @@ app.controller('AccountController', ['$scope', '$http', '$locale', '$location',
         }, function error(response) {
             console.log(response.status);
         });
+        $scope.submit = function updateCustomer(){
+            $http({
+                method: 'POST',
+                url: '/api/v1/customer/',
+                data: $scope.customer,
+                responseType: 'json',
+                withCredentials: true
+            }).then(function success(response) {
+                //...
+            }, function error(response) {
+                console.log(response.status);
+            });
+        }
     }
+
 ]);
 
 app.controller('LanguageController', [ '$scope', '$locale',
