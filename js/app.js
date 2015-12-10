@@ -170,11 +170,11 @@ app.controller('MainController', ['$scope', '$http', '$location',
 	}
 ]);
 
-app.controller('AccountController', ['$scope', '$http', '$locale', '$location',
-    function($scope, $http, $locale, $location) {
+app.controller('AccountController', ['$scope', '$http', '$locale', '$location', '$alert',
+    function($scope, $http, $locale, $location, $alert) {
         $http({
             method: 'GET',
-            url: '/api/v1/customer/',
+            url: $scope.config.api.base_url + '/api/v1/customer/',
             responseType: 'json',
             withCredentials: true
         }).then(function success(response) {
@@ -182,17 +182,29 @@ app.controller('AccountController', ['$scope', '$http', '$locale', '$location',
         }, function error(response) {
             console.log(response.status);
         });
-        $scope.submit = function updateCustomer(){
+        $scope.submit = function updateCustomer() {
             $http({
                 method: 'POST',
-                url: '/api/v1/customer/',
+                url: $scope.config.api.base_url + '/api/v1/customer/',
                 data: $scope.customer,
                 responseType: 'json',
                 withCredentials: true
             }).then(function success(response) {
-                //...
+				$alert({
+					content: '<span faf-tr="account.success">' + $locale.translate('account.success') + '</span>',
+					container: '#display-alert',
+					type: 'info',
+					html: true,
+					show: true
+				});
             }, function error(response) {
-                console.log(response.status);
+				$alert({
+					content: '<span faf-tr="account.failed">' + $locale.translate('account.failed') + '</span>',
+					container: '#display-alert',
+					type: 'info',
+					html: true,
+					show: true
+				});
             });
         }
     }

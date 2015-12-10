@@ -1,4 +1,7 @@
 {
+    "account.success": "Modifications enregistrées",
+    "account.failed": "Échec",
+    
     "cust.settings": "Options du compte",
     "cust.personal_settings": "Informations personnelles",
     "cust.addresses_settings": "Adresses",

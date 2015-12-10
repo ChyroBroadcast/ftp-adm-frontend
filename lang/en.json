@@ -1,4 +1,7 @@
 {
+    "account.success": "Successfully updated",
+    "account.failed": "Fail to update informations",
+    
     "cust.settings": "Account settings",
     "cust.personal_settings": "Personal Settings",
     "cust.addresses_settings": "Addresses Settings",
