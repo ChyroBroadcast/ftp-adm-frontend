@@ -205,7 +205,7 @@ app.controller('AccountController', ['$scope', '$http', '$locale', '$location', 
 				});
             }, function error(response) {
                 // message has the form: 'msg1;msg2;...;msgN;'
-                message = response.data.message.replace(';', '<br />');
+                message = response.data.message.replace(/;/g, '<br />');
 				$alert({
 					content: '<span faf-tr="account.failed">' + message + '</span>',
 					container: '#display-alert',
