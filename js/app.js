@@ -40,7 +40,7 @@ app.controller('LoginController', ['$scope', '$http', '$alert', '$locale', '$loc
 					$location.path('/');
 				});
 			}).error(function(data, status, headers, config) {
-				if(status === 500) {
+				if(status === 500 || status === -1) {
 					message = '<span faf-tr="host.problem">' + $locale.translate('host.problem') + '</span>';
 					type = 'danger';
 				} else if(status === 401) {
@@ -199,15 +199,17 @@ app.controller('AccountController', ['$scope', '$http', '$locale', '$location', 
 				$alert({
 					content: '<span faf-tr="account.success">' + $locale.translate('account.success') + '</span>',
 					container: '#display-alert',
-					type: 'info',
+					type: 'success',
 					html: true,
 					show: true
 				});
             }, function error(response) {
+                // message has the form: 'msg1;msg2;...;msgN;'
+                message = response.data.message.replace(';', '<br />');
 				$alert({
-					content: '<span faf-tr="account.failed">' + $locale.translate('account.failed') + '</span>',
+					content: '<span faf-tr="account.failed">' + message + '</span>',
 					container: '#display-alert',
-					type: 'info',
+					type: 'danger',
 					html: true,
 					show: true
 				});
