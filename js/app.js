@@ -40,10 +40,17 @@ app.controller('LoginController', ['$scope', '$http', '$alert', '$locale', '$loc
 					$location.path('/');
 				});
 			}).error(function(data, status, headers, config) {
+				if(status === 500) {
+					message = '<span faf-tr="host.problem">' + $locale.translate('host.problem') + '</span>';
+					type = 'danger';
+				} else if(status === 401) {
+					message = '<span faf-tr="login.authentification.failed">' + $locale.translate('login.authentification.failed') + '</span>';
+					type = 'warning';
+				} 
 				$alert({
-					content: '<span faf-tr="login.authentification.failed">' + $locale.translate('login.authentification.failed') + '</span>',
+					content: message,
 					container: '#display-alert',
-					type: 'info',
+					type: type,
 					html: true,
 					show: true
 				});
@@ -66,7 +73,6 @@ app.controller('MainController', ['$scope', '$http', '$location',
 			responseType: "json",
 		}).success(function(data, status, headers, config) {
 			$scope.config = data;
-
 			$http({
 				method: 'GET',
 				url: $scope.config.api.base_url + '/api/v1/auth/',
