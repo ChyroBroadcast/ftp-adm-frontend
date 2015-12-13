@@ -4,12 +4,15 @@ app.config(['$routeProvider', function($routeProvider) {
 	$routeProvider.when('/', {
 		templateUrl: 'view/overview.html'
 	});
-	$routeProvider.when('/login', {
-		templateUrl: 'view/login.html'
-	});
 	$routeProvider.when('/account', {
 		templateUrl: 'view/account.html',
         controller: 'AccountController'
+	});
+	$routeProvider.when('/login', {
+		templateUrl: 'view/login.html'
+	});
+	$routeProvider.when('/ftp', {
+		templateUrl: 'view/ftp.html'
 	});
 	$routeProvider.otherwise({
 		redirectTo: '/'
@@ -263,6 +266,36 @@ app.controller('AccountMenuController', [ '$scope', '$locale',
 				$scope.accountMenu[i].text = $locale.translate($scope.accountMenu[i].fafTr);
 			}
 		});
+	}
+]);
+
+app.controller('FtpListController', [ '$scope',
+	function($scope) {
+		$scope.users = [{
+			email: 'foo@baz.com',
+			fullname: 'foo baz',
+			is_active: true,
+			is_admin: true,
+			access: {
+				read: true,
+				write: true,
+			},
+			chroot: false,
+			home_directory: '/foo',
+			can_delete_user: false,
+		}, {
+			email: 'bar@baz.com',
+			fullname: 'bar baz',
+			is_active: false,
+			is_admin: false,
+			access: {
+				read: false,
+				write: false,
+			},
+			chroot: true,
+			home_directory: '/bar',
+			can_delete_user: true,
+		}];
 	}
 ]);
 

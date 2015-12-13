@@ -16,6 +16,19 @@
     "cust.addr.phone": "Phone number",
     "cust.addr.title": "Title",
 
+	"ftp.list.add_user": "Add a user",
+	"ftp.list.title": "FTP Accounts",
+	"ftp.list.table.access": "FTP rights",
+	"ftp.list.table.access.read": "Read",
+	"ftp.list.table.access.write": "Write",
+	"ftp.list.table.action": "Action",
+	"ftp.list.table.chroot": "Chroot",
+	"ftp.list.table.home_directory": "Home directory",
+	"ftp.list.table.is_admin": "Administrator account",
+	"ftp.list.table.is_active": "Active account",
+	"ftp.list.table.email": "Email",
+	"ftp.list.table.fullname": "Full name",
+
     "host.problem": "A problem occurred on the server",
     
 	"login.authentification.failed": "Invalid credentials.",

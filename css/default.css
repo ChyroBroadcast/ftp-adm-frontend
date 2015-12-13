@@ -128,3 +128,8 @@ form.form-signin.ng-invalid button.btn-primary {
   margin: 20px 0;
   text-align: center;
 }
+
+.empty_button {
+  width: 24px;
+}
+

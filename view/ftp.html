@@ -1,0 +1,81 @@
+<div class="page-header">
+	<h1 faf-tr="ftp.list.title"></h1>
+</div>
+
+<button type="button" class="btn btn-success btn-xs" aria-label="Add" onclick="location.href = location.href + '/add'">
+	<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+	<span faf-tr="ftp.list.add_user"></span>
+</button>
+
+<table class="table" ng-controller="FtpListController">
+	<thead>
+		<th faf-tr="ftp.list.table.email"></th>
+		<th  class="text-center" faf-tr="ftp.list.table.fullname"></th>
+		<th  class="text-center" faf-tr="ftp.list.table.is_active"></th>
+		<th  class="text-center" faf-tr="ftp.list.table.is_admin"></th>
+		<th  class="text-center" faf-tr="ftp.list.table.access"></th>
+		<th  class="text-center" faf-tr="ftp.list.table.chroot"></th>
+		<th  class="text-center" faf-tr="ftp.list.table.home_directory"></th>
+		<th  class="text-center" faf-tr="ftp.list.table.action"></th>
+	</thead>
+	<tbody>
+		<tr ng-repeat="user in users">
+			<td>{{ user.email }}</td>
+			<td class="text-center">{{ user.fullname }}</td>
+			<td class="text-center">
+				<button disabled type="button" class="btn btn-danger btn-xs" aria-label="Inactive" ng-hide="user.is_active">
+					<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+				</button>
+				<button disabled type="button" class="btn btn-success btn-xs" aria-label="Active" ng-show="user.is_active">
+					<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+				</button>
+			</td>
+			<td class="text-center">
+				<button disabled type="button" class="btn btn-danger btn-xs" aria-label="NoAdmin" ng-hide="user.is_admin">
+					<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+				</button>
+				<button disabled type="button" class="btn btn-success btn-xs" aria-label="Admin" ng-show="user.is_admin">
+					<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+				</button>
+			</td>
+			<td class="text-center">
+				<button disabled type="button" class="btn btn-danger btn-xs" aria-label="NoReadRights" ng-hide="user.access.read">
+					<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+					<span faf-tr="ftp.list.table.access.read"></span>
+				</button>
+				<button disabled type="button" class="btn btn-success btn-xs" aria-label="ReadRights" ng-show="user.access.read">
+					<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+					<span faf-tr="ftp.list.table.access.read"></span>
+				</button>
+
+				<button disabled type="button" class="btn btn-danger btn-xs" aria-label="NoWriteRights" ng-hide="user.access.write">
+					<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+					<span faf-tr="ftp.list.table.access.write"></span>
+				</button>
+				<button disabled type="button" class="btn btn-success btn-xs" aria-label="WriteRights" ng-show="user.access.write">
+					<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+					<span faf-tr="ftp.list.table.access.write"></span>
+				</button>
+			</td>
+			<td class="text-center">
+				<button disabled type="button" class="btn btn-danger btn-xs" aria-label="NoAdmin" ng-hide="user.chroot">
+					<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+				</button>
+				<button disabled type="button" class="btn btn-success btn-xs" aria-label="Admin" ng-show="user.chroot">
+					<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+				</button>
+			</td>
+			<td class="text-center">{{ user.home_directory }}</td>
+			<td class="text-center">
+				<button type="button" class="btn btn btn-default btn-xs" aria-label="Edit">
+					<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+				</button>
+
+				<button type="button" class="btn btn btn-danger btn-xs" aria-label="Delete" ng-show="user.can_delete_user">
+					<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+				</button>
+				<span class="btn btn-xs empty_button" ng-hide="user.can_delete_user">&nbsp;</span>
+			</td>
+		</tr>
+	</tbody>
+</table>

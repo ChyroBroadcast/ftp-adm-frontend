@@ -16,6 +16,19 @@
     "cust.addr.phone": "Numéro de téléphone",
     "cust.addr.title": "Nom",
 
+	"ftp.list.add_user": "Ajouter un utilisateur",
+	"ftp.list.title": "Comptes FTP",
+	"ftp.list.table.access": "Droits FTP",
+	"ftp.list.table.access.read": "Lecture",
+	"ftp.list.table.access.write": "Écriture",
+	"ftp.list.table.action": "Action",
+	"ftp.list.table.chroot": "Chroot",
+	"ftp.list.table.home_directory": "Répertoire personnel",
+	"ftp.list.table.is_admin": "Compte administrateur",
+	"ftp.list.table.is_active": "Compte actif",
+	"ftp.list.table.email": "Courriel",
+	"ftp.list.table.fullname": "Nom complet",
+
     "host.problem": "Une erreur est survenue sur le serveur distant",
     
 	"login.authentification.failed": "Identifiant invalide.",
