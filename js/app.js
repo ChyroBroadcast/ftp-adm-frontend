@@ -37,7 +37,6 @@ app.controller('LoginController', ['$scope', '$http', '$alert', '$locale', '$loc
 				},
 				cache: false,
 				responseType: "json",
-				withCredentials: true
 			}).success(function(data, status, headers, config) {
 				$scope.loadUserInfo(function() {
 					$location.path('/');
@@ -81,7 +80,6 @@ app.controller('MainController', ['$scope', '$http', '$location',
 				url: $scope.config.api.base_url + '/api/v1/auth/',
 				cache: false,
 				responseType: "json",
-				withCredentials: true
 			}).success(function(data, status, headers, config) {
 				$scope.loadUserInfo(function() {
 					$scope.connected = true;
@@ -96,13 +94,13 @@ app.controller('MainController', ['$scope', '$http', '$location',
 		}).error(function(data, status, headers, config) {
 		});
 
+
 		$scope.disconnect = function() {
 			$http({
 				method: 'DELETE',
 				url: $scope.config.api.base_url + '/api/v1/auth/',
 				cache: false,
 				responseType: "json",
-				withCredentials: true
 			}).success(function(data, status, headers, config) {
 				$scope.connected = false;
 				$scope.user = {
@@ -136,7 +134,6 @@ app.controller('MainController', ['$scope', '$http', '$location',
 				url: $scope.config.api.base_url + '/api/v1/user/',
 				cache: false,
 				responseType: "json",
-				withCredentials: true
 			}).success(function(data, status, headers, config) {
 				$scope.connected = true;
 				$scope.user = data.user;
@@ -185,7 +182,6 @@ app.controller('AccountController', ['$scope', '$http', '$locale', '$location', 
             method: 'GET',
             url: $scope.config.api.base_url + '/api/v1/customer/',
             responseType: 'json',
-            withCredentials: true
         }).then(function success(response) {
             $scope.customer = response.data;
         }, function error(response) {
@@ -197,7 +193,6 @@ app.controller('AccountController', ['$scope', '$http', '$locale', '$location', 
                 url: $scope.config.api.base_url + '/api/v1/customer/',
                 data: $scope.customer,
                 responseType: 'json',
-                withCredentials: true
             }).then(function success(response) {
 				$alert({
 					content: '<span faf-tr="account.success">' + $locale.translate('account.success') + '</span>',
@@ -269,33 +264,54 @@ app.controller('AccountMenuController', [ '$scope', '$locale',
 	}
 ]);
 
-app.controller('FtpListController', [ '$scope',
-	function($scope) {
-		$scope.users = [{
-			email: 'foo@baz.com',
-			fullname: 'foo baz',
-			is_active: true,
-			is_admin: true,
-			access: {
-				read: true,
-				write: true,
-			},
-			chroot: false,
-			home_directory: '/foo',
-			can_delete_user: false,
-		}, {
-			email: 'bar@baz.com',
-			fullname: 'bar baz',
-			is_active: false,
-			is_admin: false,
-			access: {
-				read: false,
-				write: false,
-			},
-			chroot: true,
-			home_directory: '/bar',
-			can_delete_user: true,
-		}];
+app.factory('FtpUserList', [ '$http',
+	function(http) {
+		var backendUrl = null;
+
+		function getFtpUsers() {
+			return http({
+				method: 'GET',
+				url: backendUrl + '/api/v1/users/'
+			});
+		}
+
+		function setBackendUrl(url) {
+			backendUrl = url;
+		}
+
+		return {
+			getFtpUsers: getFtpUsers,
+			setBackendUrl: setBackendUrl
+		};
+	}
+]);
+
+app.controller('FtpListController', [ '$scope', 'FtpUserList',
+	function($scope, model) {
+		model.setBackendUrl($scope.config.api.base_url);
+
+		model.getFtpUsers().then(function(returned) {
+			$scope.users = [];
+
+			for (var i = 0, n = returned.data.length; i < n; i++) {
+				var tmp_users = returned.data[i];
+				$scope.users.push({
+					email: tmp_users.email,
+					fullname: tmp_users.fullname,
+					is_active: tmp_users.is_active,
+					is_admin: tmp_users.is_admin,
+					access: {
+						read: tmp_users.ftp_read,
+						write: tmp_users.ftp_write
+					},
+					chroot: tmp_users.chroot,
+					home_directory: 'foo',
+					can_delete_user: tmp_users.id != $scope.user.id
+				});
+			}
+		});
+
+		$scope.users = [];
 	}
 ]);
 
