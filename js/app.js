@@ -8,11 +8,18 @@ app.config(['$routeProvider', function($routeProvider) {
 		templateUrl: 'view/account.html',
         controller: 'AccountController'
 	});
+	$routeProvider.when('/ftp', {
+		templateUrl: 'view/ftp.html',
+		controller: 'FtpListController'
+	});
+	$routeProvider.when('/ftp/add', {
+		templateUrl: 'view/ftp/add.html'
+	});
+	$routeProvider.when('/ftp/edit/:user_id', {
+		templateUrl: 'view/ftp/edit.html'
+	});
 	$routeProvider.when('/login', {
 		templateUrl: 'view/login.html'
-	});
-	$routeProvider.when('/ftp', {
-		templateUrl: 'view/ftp.html'
 	});
 	$routeProvider.otherwise({
 		redirectTo: '/'
@@ -42,10 +49,10 @@ app.controller('LoginController', ['$scope', '$http', '$alert', '$locale', '$loc
 					$location.path('/');
 				});
 			}).error(function(data, status, headers, config) {
-				if(status === 500 || status === -1) {
+				if (status === 500 || status === -1) {
 					message = '<span faf-tr="host.problem">' + $locale.translate('host.problem') + '</span>';
 					type = 'danger';
-				} else if(status === 401) {
+				} else if (status === 401) {
 					message = '<span faf-tr="login.authentification.failed">' + $locale.translate('login.authentification.failed') + '</span>';
 					type = 'warning';
 				} 
@@ -286,32 +293,157 @@ app.factory('FtpUserList', [ '$http',
 	}
 ]);
 
-app.controller('FtpListController', [ '$scope', 'FtpUserList',
-	function($scope, model) {
+app.controller('FtpListController', [ '$scope', '$interval', '$location', 'FtpUserList',
+	function($scope, $interval, $location, model) {
 		model.setBackendUrl($scope.config.api.base_url);
 
-		model.getFtpUsers().then(function(returned) {
-			$scope.users = [];
+		$scope.add = function() {
+			$location.path($location.path() + '/add');
+		}
 
-			for (var i = 0, n = returned.data.length; i < n; i++) {
-				var tmp_users = returned.data[i];
-				$scope.users.push({
-					email: tmp_users.email,
-					fullname: tmp_users.fullname,
-					is_active: tmp_users.is_active,
-					is_admin: tmp_users.is_admin,
-					access: {
-						read: tmp_users.ftp_read,
-						write: tmp_users.ftp_write
-					},
-					chroot: tmp_users.chroot,
-					home_directory: 'foo',
-					can_delete_user: tmp_users.id != $scope.user.id
-				});
-			}
-		});
+		$scope.edit = function(user) {
+			$location.path($location.path() + '/edit/' + user.email);
+		}
+
+		function fetch() {
+			model.getFtpUsers().then(function(returned) {
+				$scope.users = [];
+
+				for (var i = 0, n = returned.data.length; i < n; i++) {
+					var tmp_users = returned.data[i];
+					$scope.users.push({
+						email: tmp_users.email,
+						fullname: tmp_users.fullname,
+						is_active: tmp_users.is_active,
+						is_admin: tmp_users.is_admin,
+						access: {
+							read: tmp_users.ftp_read,
+							write: tmp_users.ftp_write
+						},
+						chroot: tmp_users.chroot,
+						home_directory: 'foo',
+						can_delete_user: tmp_users.id != $scope.user.id
+					});
+				}
+			});
+		}
 
 		$scope.users = [];
+		fetch();
+
+		var interval = $interval(fetch, 20000);
+		$scope.$on('$destroy', function() {
+			if (angular.isDefined(interval)) {
+				$interval.cancel(interval);
+				interval = null;
+			}
+		});
+	}
+]);
+
+app.controller('FtpEditUser', [ '$scope', '$alert', '$locale',
+	function($scope, $alert, $locale) {
+		var default_user = {
+			id: null,
+			email: '',
+			fullname: '',
+			password: '',
+			confirm_password: '',
+			phone: '',
+			is_active: true,
+			is_admin: false,
+			ftp_read_access: true,
+			ftp_write_access: true,
+			chroot: false,
+			home_directory: '/',
+		};
+
+		$scope.user = angular.copy(default_user);
+
+		$scope.reset = function() {
+			$scope.user = angular.copy(default_user);
+		}
+
+		$scope.add = function() {
+			var ok = true;
+
+			if (!$scope.user.email || $scope.user.email.length == 0) {
+				var message = $locale.translate('ftp.form.message.invalid_email');
+				ok = false;
+
+				if ($scope.user.email && $scope.user.email.length == 0)
+					message = $locale.translate('ftp.form.message.missing_email');
+
+				$alert({
+					content: message,
+					container: '#email_message',
+					type: 'danger',
+					html: false,
+					show: true
+				});
+			}
+
+			if (!$scope.user.fullname || $scope.user.fullname.length == 0) {
+				var message = $locale.translate('ftp.form.message.missing_fullname');
+				ok = false;
+
+				$alert({
+					content: message,
+					container: '#fullname_message',
+					type: 'danger',
+					html: false,
+					show: true
+				});
+			}
+
+			if (!$scope.user.password || !$scope.user.confirm_password) {
+				var message = $locale.translate('ftp.form.message.missing_password');
+				ok = false;
+
+				if (!$scope.user.password) {
+					$alert({
+						content: message,
+						container: '#password_message',
+						type: 'danger',
+						html: false,
+						show: true
+					});
+				}
+				if (!$scope.user.confirm_password) {
+					$alert({
+						content: message,
+						container: '#confirm_password_message',
+						type: 'danger',
+						html: false,
+						show: true
+					});
+				}
+			} else if ($scope.user.password != $scope.user.confirm_password) {
+				var message = $locale.translate('ftp.form.message.password_missmatch');
+				ok = false;
+
+				$alert({
+					content: message,
+					container: '#password_message',
+					type: 'danger',
+					html: false,
+					show: true
+				});
+			}
+
+			if (!$scope.user.home_directory || $scope.user.home_directory.length == 0) {
+				var message = $locale.translate('ftp.form.message.missing_home_directory');
+				ok = false;
+
+				$alert({
+					content: message,
+					container: '#home_directory_message',
+					type: 'danger',
+					html: false,
+					show: true
+				});
+			}
+		}
 	}
 ]);
 

@@ -2,12 +2,12 @@
 	<h1 faf-tr="ftp.list.title"></h1>
 </div>
 
-<button type="button" class="btn btn-success btn-xs" aria-label="Add" onclick="location.href = location.href + '/add'">
+<button type="button" class="btn btn-success btn-xs" aria-label="Add" ng-click="add()">
 	<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 	<span faf-tr="ftp.list.add_user"></span>
 </button>
 
-<table class="table" ng-controller="FtpListController">
+<table class="table">
 	<thead>
 		<th faf-tr="ftp.list.table.email"></th>
 		<th  class="text-center" faf-tr="ftp.list.table.fullname"></th>
@@ -67,7 +67,7 @@
 			</td>
 			<td class="text-center">{{ user.home_directory }}</td>
 			<td class="text-center">
-				<button type="button" class="btn btn btn-default btn-xs" aria-label="Edit">
+				<button type="button" class="btn btn btn-default btn-xs" aria-label="Edit" ng-click="edit(user)">
 					<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
 				</button>
 
