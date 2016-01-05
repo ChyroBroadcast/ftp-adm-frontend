@@ -293,15 +293,41 @@ app.factory('FtpUserList', [ '$http',
 	}
 ]);
 
-app.controller('FtpListController', [ '$scope', '$interval', '$location', 'FtpUserList',
-	function($scope, $interval, $location, model) {
+app.factory('FtpUserCache', [
+	function() {
+		var cached_user = {};
+
+		function getUser() {
+			return cached_user;
+		}
+
+		function resetCache() {
+			cached_user = {};
+		}
+
+		function setUser(user) {
+			cached_user = user;
+		}
+
+		return {
+			getUser: getUser,
+			resetCache: resetCache,
+			setUser: setUser
+		};
+	}
+]);
+
+app.controller('FtpListController', [ '$scope', '$interval', '$location', 'FtpUserList', 'FtpUserCache',
+	function($scope, $interval, $location, model, cache) {
 		model.setBackendUrl($scope.config.api.base_url);
 
 		$scope.add = function() {
+			cache.resetCache();
 			$location.path($location.path() + '/add');
 		}
 
 		$scope.edit = function(user) {
+			cache.setUser(user);
 			$location.path($location.path() + '/edit/' + user.email);
 		}
 
@@ -321,7 +347,7 @@ app.controller('FtpListController', [ '$scope', '$interval', '$location', 'FtpUs
 							write: tmp_users.ftp_write
 						},
 						chroot: tmp_users.chroot,
-						home_directory: 'foo',
+						home_directory: tmp_users.directory,
 						can_delete_user: tmp_users.id != $scope.user.id
 					});
 				}
@@ -341,21 +367,24 @@ app.controller('FtpListController', [ '$scope', '$interval', '$location', 'FtpUs
 	}
 ]);
 
-app.controller('FtpEditUser', [ '$scope', '$alert', '$locale', '$http', '$timeout', '$location',
-	function($scope, $alert, $locale, $http, $timeout, $location) {
+app.controller('FtpEditUser', [ '$scope', '$alert', '$locale', '$http', '$timeout', '$location', 'FtpUserCache',
+	function($scope, $alert, $locale, $http, $timeout, $location, cache) {
+		debugger;
+		var cached_user = cache.getUser();
+
 		var default_user = {
-			id: null,
-			email: '',
-			fullname: '',
+			id: cached_user.id || null,
+			email: cached_user.email || '',
+			fullname: cached_user.fullname || '',
 			password: '',
 			confirm_password: '',
 			phone: '',
-			is_active: true,
-			is_admin: false,
-			ftp_read_access: true,
-			ftp_write_access: true,
-			chroot: false,
-			home_directory: '/',
+			is_active: cached_user.is_active != null ? cached_user.is_active : true,
+			is_admin: cached_user.is_admin != null ? cached_user.is_admin : false,
+			ftp_read_access: cached_user.access != null ? cached_user.access.read : true,
+			ftp_write_access: cached_user.access != null ? cached_user.access.write : true,
+			chroot: cached_user.chroot != null ? cached_user.chroot : false,
+			home_directory: cached_user.home_directory || '/',
 		};
 
 		$scope.user = angular.copy(default_user);

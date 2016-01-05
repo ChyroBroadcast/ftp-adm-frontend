@@ -1,83 +1,104 @@
 <div class="page-header">
-	<h1 faf-tr="ftp.add.title"></h1>
+	<h1 faf-tr="ftp.edit.title"></h1>
 </div>
 
-<div>
-	<form class="form-horizontal" role="form" action="" method="post">
+<div ng-controller="FtpEditUser">
+	<form class="form-horizontal" role="form" novalidate>
 		<div class="form-group">
-			<label class="control-label col-sm-2" for="email" faf-tr="ftp.form.email"></label>
-			<div class="col-sm-10">
+			<div class="col-sm-3"></div>
+			<div id="display-alert" class="col-sm-6"></div>
+			<div class="col-sm-2"></div>
+		</div>
+
+		<div class="form-group">
+			<label class="control-label col-sm-3" for="email" faf-tr="ftp.form.email"></label>
+			<div class="col-sm-6">
 				<input class="form-control" type="email" id="email" name="email" required ng-model="user.email" faf-tr="ftp.form.placeholder.email" placeholder>
 			</div>
+			<div class="col-sm-2">
+				<div id="email_message"></div>
+			</div>
 		</div>
 
 		<div class="form-group">
-			<label class="control-label col-sm-2" for="fullname" faf-tr="ftp.form.fullname"></label>
-			<div class="col-sm-10">
+			<label class="control-label col-sm-3" for="fullname" faf-tr="ftp.form.fullname"></label>
+			<div class="col-sm-6">
 				<input class="form-control" type="text" id="fullname" name="fullname" required ng-model="user.fullname" faf-tr="ftp.form.placeholder.fullname" placeholder>
 			</div>
+			<div class="col-sm-2">
+				<div id="fullname_message"></div>
+			</div>
 		</div>
 
 		<div class="form-group">
-			<label class="control-label col-sm-2" for="password" faf-tr="ftp.form.password"></label>
-			<div class="col-sm-10">
+			<label class="control-label col-sm-3" for="password" faf-tr="ftp.form.password"></label>
+			<div class="col-sm-6">
 				<input class="form-control" type="password" id="password" name="password" required ng-model="user.password" faf-tr="ftp.form.placeholder.password" placeholder>
 			</div>
-		</div>
-
-		<div class="form-group">
-			<label class="control-label col-sm-2" for="confirm_password" faf-tr="ftp.form.confirm_password"></label>
-			<div class="col-sm-10">
-				<input class="form-control" type="password" id="confirm_password" name="confirm_password" required ng-model="user.confirm_password" faf-tr="ftp.form.placeholder.confirm_password" placeholder>
+			<div class="col-sm-2">
+				<div id="password_message"></div>
 			</div>
 		</div>
 
 		<div class="form-group">
-			<label class="control-label col-sm-2" for="fullname" faf-tr="ftp.form.phone"></label>
-			<div class="col-sm-10">
+			<label class="control-label col-sm-3" for="confirm_password" faf-tr="ftp.form.confirm_password"></label>
+			<div class="col-sm-6">
+				<input class="form-control" type="password" id="confirm_password" name="confirm_password" required ng-model="user.confirm_password" faf-tr="ftp.form.placeholder.confirm_password" placeholder>
+			</div>
+			<div class="col-sm-2">
+				<div id="confirm_password_message"></div>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="control-label col-sm-3" for="phone" faf-tr="ftp.form.phone"></label>
+			<div class="col-sm-6">
 				<input class="form-control" type="text" id="phone" name="phone" ng-model="user.phone" faf-tr="ftp.form.placeholder.phone" placeholder>
 			</div>
 		</div>
 
 		<div class="form-group">
-			<label class="control-label col-sm-2" for="is_active" faf-tr="ftp.form.is_active"></label>
-			<div class="col-sm-10">
+			<label class="control-label col-sm-3" for="is_active" faf-tr="ftp.form.is_active"></label>
+			<div class="col-sm-6">
 				<input class="form-control input-sm" type="checkbox" id="is_active" name="is_active" ng-model="user.is_active">
 			</div>
 		</div>
 
 		<div class="form-group">
-			<label class="control-label col-sm-2" for="is_admin" faf-tr="ftp.form.is_admin"></label>
-			<div class="col-sm-10">
+			<label class="control-label col-sm-3" for="is_admin" faf-tr="ftp.form.is_admin"></label>
+			<div class="col-sm-6">
 				<input class="form-control input-sm" type="checkbox" id="is_admin" name="is_admin" ng-model="user.is_admin">
 			</div>
 		</div>
 
 		<div class="form-group">
-			<label class="control-label col-sm-2" for="ftp_read_access" faf-tr="ftp.form.ftp_read_access"></label>
-			<div class="col-sm-10">
+			<label class="control-label col-sm-3" for="ftp_read_access" faf-tr="ftp.form.ftp_read_access"></label>
+			<div class="col-sm-6">
 				<input class="form-control input-sm" type="checkbox" id="ftp_read_access" name="ftp_read_access" ng-model="user.ftp_read_access">
 			</div>
 		</div>
 
 		<div class="form-group">
-			<label class="control-label col-sm-2" for="ftp_write_access" faf-tr="ftp.form.ftp_write_access"></label>
-			<div class="col-sm-10">
+			<label class="control-label col-sm-3" for="ftp_write_access" faf-tr="ftp.form.ftp_write_access"></label>
+			<div class="col-sm-6">
 				<input class="form-control input-sm" type="checkbox" id="ftp_write_access" name="ftp_write_access" ng-model="user.ftp_write_access">
 			</div>
 		</div>
 
 		<div class="form-group">
-			<label class="control-label col-sm-2" for="chroot" faf-tr="ftp.form.chroot"></label>
-			<div class="col-sm-10">
+			<label class="control-label col-sm-3" for="chroot" faf-tr="ftp.form.chroot"></label>
+			<div class="col-sm-6">
 				<input class="form-control input-sm" type="checkbox" id="chroot" name="chroot" ng-model="user.chroot">
 			</div>
 		</div>
 
 		<div class="form-group">
-			<label class="control-label col-sm-2" for="home_directory" faf-tr="ftp.form.home_directory"></label>
-			<div class="col-sm-10">
+			<label class="control-label col-sm-3" for="home_directory" faf-tr="ftp.form.home_directory"></label>
+			<div class="col-sm-6">
 				<input class="form-control" type="text" id="home_directory" name="home_directory" ng-model="user.home_directory" faf-tr="ftp.form.placeholder.home_directory" placeholder>
+			</div>
+			<div class="col-sm-2">
+				<div id="home_directory_message"></div>
 			</div>
 		</div>
 
