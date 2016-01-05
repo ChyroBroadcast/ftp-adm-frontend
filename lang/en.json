@@ -36,12 +36,14 @@
 	"ftp.form.reset": "Reset",
 	"ftp.form.update": "Update",
 
+	"ftp.form.message.add_user_failed": "Failed to create user",
 	"ftp.form.message.invalid_email": "Email is invalid",
 	"ftp.form.message.missing_email": "Email is required",
 	"ftp.form.message.missing_home_directory": "Home directory is required",
 	"ftp.form.message.missing_fullname": "Fullname is required",
 	"ftp.form.message.missing_password": "Password is required",
 	"ftp.form.message.password_missmatch": "Passwords missmatch",
+	"ftp.form.message.user_creation_success": "User has been successfully created",
 	"ftp.form.message.wrong_password": "Password missmatch, please re-enter your password",
 
 	"ftp.list.add_user": "Add a user",

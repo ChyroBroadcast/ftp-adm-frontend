@@ -341,8 +341,8 @@ app.controller('FtpListController', [ '$scope', '$interval', '$location', 'FtpUs
 	}
 ]);
 
-app.controller('FtpEditUser', [ '$scope', '$alert', '$locale',
-	function($scope, $alert, $locale) {
+app.controller('FtpEditUser', [ '$scope', '$alert', '$locale', '$http', '$timeout', '$location',
+	function($scope, $alert, $locale, $http, $timeout, $location) {
 		var default_user = {
 			id: null,
 			email: '',
@@ -441,6 +441,45 @@ app.controller('FtpEditUser', [ '$scope', '$alert', '$locale',
 					type: 'danger',
 					html: false,
 					show: true
+				});
+			}
+
+			if (ok) {
+				$http({
+					method: 'POST',
+					url: $scope.config.api.base_url + '/api/v1/users/',
+					data: $scope.user,
+					cache: false,
+					responseType: "json",
+				}).then(function(response) {
+					$alert({
+						content: $locale.translate('ftp.form.message.user_creation_success'),
+						container: '#display-alert',
+						type: 'info',
+						show: true
+					});
+
+					$timeout(function redirect() {
+						$location.path('/ftp');
+					}, 5000);
+				}, function(response) {
+					if (status === 500 || status === -1) {
+						message = + $locale.translate('host.problem');
+						type = 'danger';
+					} else if (status === 401) {
+						message = $locale.translate('ftp.form.message.add_user_failed');
+						type = 'warning';
+					} 
+
+					if (message) {
+						$alert({
+							content: message,
+							container: '#display-alert',
+							type: type,
+							html: true,
+							show: true
+						});
+					}
 				});
 			}
 		}
