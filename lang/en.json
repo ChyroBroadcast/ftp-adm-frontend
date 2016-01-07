@@ -36,6 +36,14 @@
 	"ftp.form.reset": "Reset",
 	"ftp.form.update": "Update",
 
+	"ftp.form.delete_user.delete_failed": "Failed to delete user “{0}”",
+	"ftp.form.delete_user.delete_ok": "User “{0}” has been deleted",
+	"ftp.form.delete_user.title": "Delete User",
+	"ftp.form.delete_user.question": "Confirm deletion of user “{0}”?",
+	"ftp.form.delete_user.confirm.ok": "Ok",
+	"ftp.form.delete_user.confirm.no": "No",
+	"ftp.form.delete_user.confirm.yes": "Yes",
+
 	"ftp.form.message.add_user_failed": "Failed to create user",
 	"ftp.form.message.invalid_email": "Email is invalid",
 	"ftp.form.message.missing_email": "Email is required",
@@ -43,7 +51,9 @@
 	"ftp.form.message.missing_fullname": "Fullname is required",
 	"ftp.form.message.missing_password": "Password is required",
 	"ftp.form.message.password_missmatch": "Passwords missmatch",
+	"ftp.form.message.update_user_failed": "Failed to update user’s information",
 	"ftp.form.message.user_creation_success": "User has been successfully created",
+	"ftp.form.message.user_update_success": "User has been successfully updated",
 	"ftp.form.message.wrong_password": "Password missmatch, please re-enter your password",
 
 	"ftp.list.add_user": "Add a user",

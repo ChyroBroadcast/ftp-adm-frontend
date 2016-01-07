@@ -1,0 +1,21 @@
+<div class="modal" tabindex="-1" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" ng-click="$hide()">&times;</button>
+				<h4 class="modal-title" faf-tr="ftp.form.delete_user.title"></h4>
+			</div>
+
+			<div class="modal-body">
+				<h4 ng-show="not_deleted" faf-tr="ftp.form.delete_user.question" faf-tr-params="[user_email]"></h4>
+				<h4 ng-show="delete_failed" faf-tr="ftp.form.delete_user.delete_failed" faf-tr-params="[user_email]"></h4>
+				<h4 ng-show="delete_ok" faf-tr="ftp.form.delete_user.delete_ok" faf-tr-params="[user_email]"></h4>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" ng-show="not_deleted" ng-click="$hide()" faf-tr="ftp.form.delete_user.confirm.no"></button>
+				<button type="button" class="btn btn-primary" ng-show="not_deleted" ng-click="submit()" faf-tr="ftp.form.delete_user.confirm.yes"></button>
+				<button type="button" class="btn btn-default" ng-hide="not_deleted" ng-click="$hide()" faf-tr="ftp.form.delete_user.confirm.ok"></button>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,48 +1,60 @@
 var FTPAdmDirv = angular.module('ftpAdmFrontendDirv', []);
 
 FTPAdmDirv.directive('fafTr', [ '$locale', function($tr) {
-        function set_value(scope, elt, attrs, need_eval) {
-                var tr = $tr.translate(attrs.fafTr);
+	function format_string(formatted, params) {
+		for (var i = 0; i < params.length; i++) {
+			var regexp = new RegExp('\\{' + i + '\\}', 'gi');
+			formatted = formatted.replace(regexp, params[i]);
+		}
+		return formatted;
+	}
 
-                if (need_eval)
-                        tr = scope.$eval(tr);
+	return {
+		restrict: 'A',
+		link: function(scope, element, attrs) {
+			var need_eval = 'fafTrEval' in attrs;
+			var has_params = 'fafTrParams' in attrs;
 
-                if (attrs.fafTr.length > 0) {
-                        if ('placeholder' in attrs)
-                                elt.prop('placeholder', tr);
-                        else if ('title' in attrs)
-                                elt.prop('title', tr);
-                        else
-                                elt.html(tr);
-                }
-        }
+			scope.$on('$localeChanged', function() {
+					set_value();
+			});
 
-        return {
-                restrict: 'A',
-                link: function(scope, element, attrs) {
-                        var eval = 'fafTrEval' in attrs;
+			if (need_eval) {
+				scope.$watch(function() {
+					var tr = $tr.translate(attrs.fafTr);
+					return scope.$eval(tr);
+				}, function() {
+					set_value();
+				});
+			}
 
-                        scope.$on('$localeChanged', function() {
-                                set_value(scope, element, attrs, eval);
-                        });
+			attrs.$observe('fafTr', function(value) {
+				set_value();
+			});
 
-                        if (eval) {
-                                scope.$watch(function() {
-                                        var tr = $tr.translate(attrs.fafTr);
-                                        return scope.$eval(tr);
-                                }, function() {
-                                        set_value(scope, element, attrs, eval);
-                                });
-                        }
+			if (attrs.fafTr)
+				set_value();
 
-                        attrs.$observe('fafTr', function(value) {
-                                set_value(scope, element, attrs, eval);
-                        });
+			function set_value() {
+				var tr = $tr.translate(attrs.fafTr);
 
-                        if (attrs.fafTr)
-                                set_value(scope, element, attrs, eval);
-                },
-        };
+				if (need_eval)
+					tr = scope.$eval(tr);
+
+				if (has_params)
+					tr = format_string(tr, scope.$eval(attrs.fafTrParams));
+
+				if (attrs.fafTr.length > 0) {
+					if ('placeholder' in attrs)
+						element.prop('placeholder', tr);
+					else if ('title' in attrs)
+						element.prop('title', tr);
+					else
+						element.html(tr);
+				}
+			}
+		},
+	};
 }]);
 
 FTPAdmDirv.directive('fafSize', [ '$locale', function($tr) {
@@ -87,15 +99,15 @@ FTPAdmDirv.directive('fafSize', [ '$locale', function($tr) {
 				element.html(size.toFixed(width) + type);
 			}
 
-                        scope.$on('$localeChanged', function() {
+			scope.$on('$localeChanged', function() {
 				convertSize(attrs.fafSize);
-                        });
+			});
 
-                        attrs.$observe('fafSize', function(value) {
+			attrs.$observe('fafSize', function(value) {
 				convertSize(value);
-                        });
+			});
 
-                        if (attrs.fafSize)
+			if (attrs.fafSize)
 				convertSize(attrs.fafSize);
 		},
 	};

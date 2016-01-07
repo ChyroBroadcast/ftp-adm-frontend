@@ -71,7 +71,7 @@
 					<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
 				</button>
 
-				<button type="button" class="btn btn btn-danger btn-xs" aria-label="Delete" ng-show="user.can_delete_user">
+				<button type="button" class="btn btn btn-danger btn-xs" aria-label="Delete" ng-click="delete(user)" ng-show="user.can_delete_user">
 					<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
 				</button>
 				<span class="btn btn-xs empty_button" ng-hide="user.can_delete_user">&nbsp;</span>

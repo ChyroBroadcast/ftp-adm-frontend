@@ -36,6 +36,14 @@
 	"ftp.form.reset": "Remise à zéro",
 	"ftp.form.update": "Mettre à jour",
 
+	"ftp.form.delete_user.delete_failed": "Échec lors de la suppression de l’utilisateur « {0} »",
+	"ftp.form.delete_user.delete_ok": "L’utilisateur « {0} » a bien été supprimé",
+	"ftp.form.delete_user.title": "Suppression de l’utilisateur",
+	"ftp.form.delete_user.question": "Confirmer la suppression de l’utilisateur « {0} » ?",
+	"ftp.form.delete_user.confirm.ok": "Ok",
+	"ftp.form.delete_user.confirm.no": "Non",
+	"ftp.form.delete_user.confirm.yes": "Oui",
+
 	"ftp.form.message.add_user_failed": "Échec lors de la création de l’utilisateur",
 	"ftp.form.message.invalid_email": "L’email est invalide",
 	"ftp.form.message.missing_email": "L’email est requis",
@@ -43,7 +51,9 @@
 	"ftp.form.message.missing_fullname": "Le nom complet est requis",
 	"ftp.form.message.missing_password": "Le mot de passe est requis",
 	"ftp.form.message.password_missmatch": "Les mots de passe ne correspondent pas",
+	"ftp.form.message.update_user_failed": "",
 	"ftp.form.message.user_creation_success": "L’utilisateur a bien été créé",
+	"ftp.form.message.user_update_success": "L’utilisateur a bien été mis à jour",
 	"ftp.form.message.wrong_password": "Les mots de passe ne corresponds pas, vous devez ré-entrer votre mot de passe",
 
 	"ftp.list.add_user": "Ajouter un utilisateur",

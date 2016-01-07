@@ -81,7 +81,7 @@ app.controller('MainController', ['$scope', '$http', '$location',
 			cache: true,
 			responseType: "json",
 		}).success(function(data, status, headers, config) {
-			$scope.config = data;
+			$rootScope.config = $scope.config = data;
 			$http({
 				method: 'GET',
 				url: $scope.config.api.base_url + '/api/v1/auth/',
@@ -317,13 +317,31 @@ app.factory('FtpUserCache', [
 	}
 ]);
 
-app.controller('FtpListController', [ '$scope', '$interval', '$location', 'FtpUserList', 'FtpUserCache',
-	function($scope, $interval, $location, model, cache) {
+app.controller('FtpListController', [ '$scope', '$interval', '$locale', '$location', '$modal', 'FtpUserList', 'FtpUserCache',
+	function($scope, $interval, $locale, $location, $modal, model, cache) {
 		model.setBackendUrl($scope.config.api.base_url);
 
 		$scope.add = function() {
 			cache.resetCache();
 			$location.path($location.path() + '/add');
+		}
+
+		$scope.delete = function(user) {
+			$modal({
+				placement: 'center',
+				animation: 'am-fade-and-scale',
+				templateUrl: 'view/ftp/delete.html',
+				controller: 'FtpDeleteUserController',
+				resolve: {
+					update: function() {
+						return fetch;
+					},
+					user: function() {
+						return user;
+					}
+				},
+				show: true
+			});
 		}
 
 		$scope.edit = function(user) {
@@ -338,6 +356,9 @@ app.controller('FtpListController', [ '$scope', '$interval', '$location', 'FtpUs
 				for (var i = 0, n = returned.data.length; i < n; i++) {
 					var tmp_users = returned.data[i];
 					$scope.users.push({
+						id: tmp_users.id,
+						uid: tmp_users.uid,
+						gid: tmp_users.gid,
 						email: tmp_users.email,
 						fullname: tmp_users.fullname,
 						is_active: tmp_users.is_active,
@@ -347,6 +368,7 @@ app.controller('FtpListController', [ '$scope', '$interval', '$location', 'FtpUs
 							write: tmp_users.ftp_write
 						},
 						chroot: tmp_users.chroot,
+						phone: tmp_users.phone,
 						home_directory: tmp_users.directory,
 						can_delete_user: tmp_users.id != $scope.user.id
 					});
@@ -367,9 +389,43 @@ app.controller('FtpListController', [ '$scope', '$interval', '$location', 'FtpUs
 	}
 ]);
 
+app.controller('FtpDeleteUserController', [ '$scope', '$http', '$timeout', 'update', 'user',
+	function($scope, $http, $timeout, update, user) {
+		$scope.user_email = user.email;
+
+		$scope.not_deleted = true;
+		$scope.delete_failed = false;
+		$scope.delete_ok = false;
+
+		$scope.submit = function() {
+			$http({
+				method: 'DELETE',
+				url: $scope.config.api.base_url + '/api/v1/users/?id=' + user.id,
+				cache: false,
+				responseType: "json",
+			}).success(function(data, status, headers, config) {
+				$scope.not_deleted = false;
+				$scope.delete_ok = true;
+				
+				update();
+
+				$timeout(function() {
+					$scope.$hide();
+				}, 5000);
+			}).error(function(data, status, headers, config) {
+				$scope.not_deleted = false;
+				$scope.delete_failed = true;
+
+				$timeout(function() {
+					$scope.$hide();
+				}, 5000);
+			});
+		}
+	}
+]);
+
 app.controller('FtpEditUser', [ '$scope', '$alert', '$locale', '$http', '$timeout', '$location', 'FtpUserCache',
 	function($scope, $alert, $locale, $http, $timeout, $location, cache) {
-		debugger;
 		var cached_user = cache.getUser();
 
 		var default_user = {
@@ -378,11 +434,11 @@ app.controller('FtpEditUser', [ '$scope', '$alert', '$locale', '$http', '$timeou
 			fullname: cached_user.fullname || '',
 			password: '',
 			confirm_password: '',
-			phone: '',
+			phone: cached_user.phone || '',
 			is_active: cached_user.is_active != null ? cached_user.is_active : true,
 			is_admin: cached_user.is_admin != null ? cached_user.is_admin : false,
-			ftp_read_access: cached_user.access != null ? cached_user.access.read : true,
-			ftp_write_access: cached_user.access != null ? cached_user.access.write : true,
+			ftp_read_access: cached_user.access != null ? !!cached_user.access.read : true,
+			ftp_write_access: cached_user.access != null ? !!cached_user.access.write : true,
 			chroot: cached_user.chroot != null ? cached_user.chroot : false,
 			home_directory: cached_user.home_directory || '/',
 		};
@@ -394,6 +450,58 @@ app.controller('FtpEditUser', [ '$scope', '$alert', '$locale', '$http', '$timeou
 		}
 
 		$scope.add = function() {
+			if (check_info(true)) {
+				$http({
+					method: 'POST',
+					url: $scope.config.api.base_url + '/api/v1/users/',
+					data: {
+						email: $scope.user.email,
+						fullname: $scope.user.fullname,
+						password: $scope.user.password,
+						phone: $scope.user.phone,
+						is_active: $scope.user.is_active,
+						is_admin: $scope.user.is_admin,
+						chroot: $scope.user.chroot,
+						ftp_read: $scope.user.ftp_read_access,
+						ftp_write: $scope.user.ftp_write_access,
+						homedirectory: $scope.user.home_directory
+					},
+					cache: false,
+					responseType: "json",
+				}).then(function(response) {
+					$alert({
+						content: $locale.translate('ftp.form.message.user_creation_success'),
+						container: '#display-alert',
+						type: 'info',
+						show: true
+					});
+
+					$timeout(function redirect() {
+						$location.path('/ftp');
+					}, 5000);
+				}, function(response) {
+					if (response.status === 500 || response.status === -1) {
+						message = $locale.translate('host.problem');
+						type = 'danger';
+					} else if (response.status === 401) {
+						message = $locale.translate('ftp.form.message.add_user_failed');
+						type = 'warning';
+					} 
+
+					if (message) {
+						$alert({
+							content: message,
+							container: '#display-alert',
+							type: type,
+							html: true,
+							show: true
+						});
+					}
+				});
+			}
+		}
+
+		function check_info(create_user) {
 			var ok = true;
 
 			if (!$scope.user.email || $scope.user.email.length == 0) {
@@ -425,7 +533,8 @@ app.controller('FtpEditUser', [ '$scope', '$alert', '$locale', '$http', '$timeou
 				});
 			}
 
-			if (!$scope.user.password || !$scope.user.confirm_password) {
+			if (!create_user && !$scope.user.password && !$scope.user.confirm_password) {
+			} else if (!$scope.user.password || !$scope.user.confirm_password) {
 				var message = $locale.translate('ftp.form.message.missing_password');
 				ok = false;
 
@@ -473,16 +582,34 @@ app.controller('FtpEditUser', [ '$scope', '$alert', '$locale', '$http', '$timeou
 				});
 			}
 
-			if (ok) {
+			return ok;
+		}
+
+		$scope.update = function() {
+			if (check_info(false)) {
 				$http({
-					method: 'POST',
+					method: 'PUT',
 					url: $scope.config.api.base_url + '/api/v1/users/',
-					data: $scope.user,
+					data: {
+						id: $scope.user.id,
+						uid: $scope.user.uid,
+						gid: $scope.user.gid,
+						email: $scope.user.email,
+						fullname: $scope.user.fullname,
+						password: $scope.user.password || undefined,
+						phone: $scope.user.phone,
+						is_active: $scope.user.is_active,
+						is_admin: $scope.user.is_admin,
+						chroot: $scope.user.chroot,
+						ftp_read: $scope.user.ftp_read_access,
+						ftp_write: $scope.user.ftp_write_access,
+						homedirectory: $scope.user.home_directory
+					},
 					cache: false,
 					responseType: "json",
 				}).then(function(response) {
 					$alert({
-						content: $locale.translate('ftp.form.message.user_creation_success'),
+						content: $locale.translate('ftp.form.message.user_update_success'),
 						container: '#display-alert',
 						type: 'info',
 						show: true
@@ -492,11 +619,11 @@ app.controller('FtpEditUser', [ '$scope', '$alert', '$locale', '$http', '$timeou
 						$location.path('/ftp');
 					}, 5000);
 				}, function(response) {
-					if (status === 500 || status === -1) {
-						message = + $locale.translate('host.problem');
+					if (response.status === 500 || response.status === -1) {
+						message = $locale.translate('host.problem');
 						type = 'danger';
-					} else if (status === 401) {
-						message = $locale.translate('ftp.form.message.add_user_failed');
+					} else if (response.status === 401) {
+						message = $locale.translate('ftp.form.message.update_user_failed');
 						type = 'warning';
 					} 
 
